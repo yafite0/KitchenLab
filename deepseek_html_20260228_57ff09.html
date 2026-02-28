@@ -1,0 +1,1622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>厨房实验室</title>
+    <style>
+        /* ========== 样式区 ========== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        body {
+            background: #2b2b1f;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 8px;
+        }
+        .game-container {
+            width: 100%;
+            max-width: 520px;
+            background: #4a3a2a;
+            border-radius: 40px 40px 30px 30px;
+            box-shadow: 0 20px 30px rgba(0,0,0,0.6);
+            padding: 16px 12px 20px;
+            border: 3px solid #6b4f35;
+            position: relative;
+        }
+
+        /* 顶部信息栏 */
+        .top-bar {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .status-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #6b5238;
+            border-radius: 60px;
+            padding: 8px 16px;
+            border: 2px solid #ac8b60;
+            box-shadow: inset 0 -3px 0 #3d2e1b;
+        }
+        .business-status {
+            font-weight: 700;
+            font-size: 16px;
+            padding: 4px 12px;
+            border-radius: 30px;
+            background: #3d2e1b;
+            color: #ffdcaa;
+        }
+        .business-status.open {
+            background: #2d6a4f;
+            color: #e9ffdb;
+        }
+        .currency-display {
+            background: #b59d6b;
+            border-radius: 40px;
+            padding: 6px 16px;
+            font-weight: 800;
+            color: #2d2a17;
+            font-size: 18px;
+        }
+        .time-display {
+            color: #ffe5b9;
+            font-size: 14px;
+        }
+        .feature-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #6b5238;
+            border-radius: 60px;
+            padding: 8px 12px;
+            border: 2px solid #ac8b60;
+            box-shadow: inset 0 -3px 0 #3d2e1b;
+        }
+        .toggle-btn {
+            background: #947b58;
+            border: 2px solid #e7c594;
+            border-radius: 40px;
+            padding: 8px 16px;
+            font-size: 16px;
+            font-weight: 700;
+            color: #ffebc0;
+            box-shadow: 0 3px 0 #5d422b;
+            cursor: pointer;
+            transition: 0.02s;
+        }
+        .toggle-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 0 0 #5d422b;
+        }
+        .toggle-btn.immersive {
+            background: #b59d6b;
+            color: #2d2a17;
+        }
+        .daily-special {
+            background: #8b6f4c;
+            border-radius: 40px;
+            padding: 8px 16px;
+            border: 2px solid #dbb47a;
+            font-weight: 600;
+            color: #fff1c1;
+        }
+        .daily-special span {
+            color: #ffb347;
+            font-size: 18px;
+            margin-left: 6px;
+        }
+
+        /* 顾客区域 */
+        .guest-area {
+            background: #8b6f4c;
+            padding: 16px 12px 12px;
+            border-radius: 50px 50px 25px 25px;
+            box-shadow: inset 0 -5px 0 #5d3e25, 0 8px 0 #3d2e1b;
+            margin-bottom: 16px;
+            border: 2px solid #b99e7c;
+        }
+        .guest-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .guest-emoji {
+            background: #f0dbb4;
+            width: 70px;
+            height: 70px;
+            border-radius: 50px 50px 25px 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            box-shadow: 0 6px 0 #8b6f4c, 0 8px 8px rgba(0,0,0,0.3);
+            border: 3px solid #ffcf9a;
+        }
+        .guest-bubble {
+            flex: 1;
+            background: #fff9e6;
+            border-radius: 35px 35px 35px 8px;
+            padding: 10px 14px;
+            border: 3px solid #dbb47a;
+            box-shadow: 0 4px 0 #997b56;
+        }
+        .order-text {
+            font-size: 15px;
+            font-weight: bold;
+            color: #3a2c1c;
+        }
+        .order-name {
+            font-size: 22px;
+            font-weight: 800;
+            color: #a1521d;
+            margin-top: 2px;
+        }
+        .queue-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 8px;
+            padding: 0 4px;
+            color: #ffe5b9;
+            font-size: 14px;
+        }
+        .queue-count {
+            background: #3d2e1b;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-weight: 700;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+        }
+        .btn {
+            flex: 1;
+            background: #f5c284;
+            border: none;
+            border-radius: 40px;
+            padding: 14px 0;
+            font-size: 20px;
+            font-weight: 800;
+            color: #3e2c16;
+            box-shadow: 0 5px 0 #b27d48, 0 4px 8px black;
+            transition: 0.05s linear;
+            text-align: center;
+            cursor: pointer;
+            border: 2px solid #ffdaa0;
+        }
+        .btn:active { transform: translateY(4px); box-shadow: 0 1px 0 #b27d48; }
+        .btn.secondary { background: #cfb28b; box-shadow: 0 5px 0 #8e6f47; }
+        .btn.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+            filter: grayscale(0.5);
+        }
+        .btn.cook-serve {
+            background: #a5d6a5;
+            box-shadow: 0 5px 0 #5f8b5f;
+            color: #1d3a1d;
+            border-color: #c0ebc0;
+            font-size: 24px;
+            padding: 18px 0;
+            width: 100%;
+            margin: 8px 0 4px;
+        }
+
+        /* 左右双列 */
+        .row-split {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+            min-height: 150px;
+        }
+        .menu-col {
+            flex: 1.2;
+            background: #6b5238;
+            border-radius: 30px;
+            padding: 10px 6px;
+            border: 2px solid #ac8b60;
+            box-shadow: inset 0 0 8px #2f2419;
+            overflow-y: auto;
+            max-height: 180px;
+        }
+        .menu-title {
+            color: #ffdcaa;
+            font-weight: 700;
+            font-size: 15px;
+            text-align: center;
+            margin-bottom: 6px;
+        }
+        .menu-item {
+            background: #947b58;
+            margin: 5px 0;
+            padding: 8px 4px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #c9a15b;
+            box-shadow: 0 3px 0 #5d422b;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 15px;
+            color: #23200e;
+            text-align: center;
+        }
+        .menu-item.selected {
+            background: #ffbc6e;
+            border-color: #fff3b3;
+            box-shadow: 0 3px 0 #a56e31;
+        }
+
+        .recipe-col {
+            flex: 1;
+            background: #5f4a32;
+            border-radius: 30px;
+            padding: 10px 6px;
+            border: 2px solid #b39263;
+            box-shadow: inset 0 0 6px #20180f;
+            overflow-y: auto;
+            max-height: 180px;
+        }
+        .recipe-title {
+            color: #ffda9e;
+            font-weight: 700;
+            font-size: 15px;
+            text-align: center;
+            margin-bottom: 6px;
+        }
+        .recipe-item {
+            background: #7c6446;
+            margin: 5px 0;
+            padding: 8px 6px;
+            border-radius: 25px;
+            border: 1px solid #ccaa73;
+            color: #f7efd6;
+            font-size: 13px;
+            font-weight: 500;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+        .recipe-item.locked {
+            opacity: 0.5;
+            background: #5d4b36;
+            filter: grayscale(0.6);
+            cursor: default;
+            pointer-events: none;
+        }
+        .recipe-item.unlocked {
+            background: #9b855d;
+            border-color: #ffdd99;
+        }
+        .recipe-item.unlocked:active {
+            transform: scale(0.98);
+            background: #b79b6b;
+        }
+
+        /* 库存面板 */
+        .inventory-panel {
+            background: #5f4630;
+            border-radius: 30px;
+            padding: 12px;
+            margin: 16px 0 8px;
+            border: 3px solid #ad8759;
+        }
+        .inventory-title {
+            color: #ffda9e;
+            font-weight: 700;
+            font-size: 16px;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        .inventory-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .inventory-item {
+            background: #7c6446;
+            border-radius: 30px;
+            padding: 8px 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            border: 1px solid #ccaa73;
+            color: #f7efd6;
+            font-size: 14px;
+        }
+        .inventory-item .count {
+            font-weight: 800;
+            color: #ffd966;
+            margin-left: auto;
+        }
+
+        /* 进货商面板 */
+        .merchant-panel {
+            background: #5f4630;
+            border-radius: 30px;
+            padding: 12px;
+            margin: 16px 0 8px;
+            border: 3px solid #ad8759;
+        }
+        .merchant-title {
+            color: #ffda9e;
+            font-weight: 700;
+            font-size: 16px;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        .merchant-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .merchant-item {
+            background: #7c6446;
+            border-radius: 30px;
+            padding: 8px 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            border: 1px solid #ccaa73;
+            color: #f7efd6;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .merchant-item:active {
+            background: #9b855d;
+        }
+        .merchant-item .price {
+            font-weight: 800;
+            color: #ffd966;
+            margin-left: auto;
+        }
+        .merchant-item.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        /* 厨房操作区 */
+        .counter {
+            background: #bd9a6b;
+            border-radius: 35px 35px 20px 20px;
+            padding: 16px 12px;
+            box-shadow: inset 0 -5px 0 #7e5d38, 0 8px 0 #4f3a24;
+            border: 2px solid #e7c594;
+            margin-top: 4px;
+        }
+        .panel {
+            background: #5f4630;
+            border-radius: 30px;
+            padding: 14px 12px;
+            border: 3px solid #ad8759;
+            box-shadow: inset 0 0 5px #2b1f12;
+        }
+        .ingredient-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 12px 0;
+        }
+        .ingr-emoji {
+            background: #ecdbb9;
+            width: 46px;
+            height: 46px;
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            border: 2px solid #c9a769;
+            box-shadow: 0 3px 0 #836e48;
+            flex-shrink: 0;
+        }
+        .slider-box {
+            flex: 4;
+            min-width: 160px;
+        }
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            color: #ffebc0;
+            font-weight: 600;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+        .slider-label .range-hint {
+            color: #ffd966;
+            font-size: 12px;
+        }
+        .current-hint {
+            color: #ffd0a0;
+            font-size: 12px;
+            margin-left: 4px;
+        }
+        input[type=range] {
+            width: 100%;
+            height: 16px;
+            background: #eec18e;
+            border-radius: 20px;
+            -webkit-appearance: none;
+            appearance: none;
+            box-shadow: inset 0 2px 5px #413222;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 32px;
+            height: 32px;
+            background: #fff5d0;
+            border-radius: 50%;
+            border: 3px solid #b1530f;
+            box-shadow: 0 3px 0 #6b3c12;
+            cursor: pointer;
+        }
+        .salt-area {
+            background: #847054;
+            border-radius: 30px;
+            padding: 12px 10px;
+            margin: 12px 0 6px;
+            border: 2px solid #cfa66b;
+        }
+        .salt-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .total-info {
+            color: #ffe5b9;
+            font-weight: 600;
+            font-size: 15px;
+            margin-top: 8px;
+            text-align: right;
+        }
+        .shortage-warning {
+            background: #9d4e4e;
+            border-radius: 20px;
+            padding: 6px 12px;
+            margin: 8px 0;
+            color: #ffebc0;
+            font-size: 14px;
+            border-left: 5px solid #ff8a8a;
+        }
+        .story-fragment {
+            background: #3d2e1b;
+            border-radius: 20px;
+            padding: 8px 12px;
+            margin: 10px 0 5px;
+            color: #ffdbb5;
+            font-size: 14px;
+            font-style: italic;
+            border-left: 5px solid #b48b4b;
+        }
+        .advice-box {
+            background: #3d3426;
+            border-radius: 30px;
+            padding: 8px 12px;
+            margin: 10px 0 0;
+            color: #ffdcaa;
+            font-size: 14px;
+            border: 1px solid #b48b4b;
+        }
+        .plate {
+            background: #e0d3bc;
+            border-radius: 80px 80px 40px 40px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            border: 4px solid #ae9472;
+            box-shadow: 0 6px 0 #6c5a41;
+            margin-top: 12px;
+        }
+        .dish-icon {
+            background: #cf5e2a;
+            width: 64px;
+            height: 64px;
+            border-radius: 50% 50% 30% 30%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            border: 3px solid #ffb156;
+            box-shadow: inset 0 -5px 0 #863d14;
+        }
+        .dish-meta { flex: 1; }
+        .dish-name { font-size: 22px; font-weight: 800; color: #1e2f1c; }
+        .feedback { color: #f9ffd6; background: #4e6b3d; padding: 6px 10px; border-radius: 30px; font-size: 16px; font-weight: 600; display: inline-block; }
+        .score-badge { background: #ffeeab; padding: 6px 10px; border-radius: 40px; font-weight: 800; font-size: 26px; color: #003f1f; border: 2px solid gold; }
+        
+        /* 评分区域 - 现在在按钮下方 */
+        .score-section {
+            margin: 8px 0 4px;
+        }
+        
+        /* 版权声明 */
+        .copyright {
+            text-align: center;
+            color: #8b7a5a;
+            font-size: 12px;
+            margin-top: 16px;
+            padding-top: 8px;
+            border-top: 1px solid #6b5a3a;
+        }
+        .footer-notes { color: #bba16f; text-align: center; margin-top: 8px; font-size: 12px; }
+    </style>
+</head>
+<body>
+<div class="game-container">
+    <!-- 顶部信息栏 -->
+    <div class="top-bar">
+        <div class="status-row">
+            <div class="business-status" id="businessStatus">🕒 营业中</div>
+            <div class="currency-display" id="currencyDisplay">💰 0 金币</div>
+            <div class="time-display" id="timeDisplay">12:00</div>
+        </div>
+        <div class="feature-row">
+            <div class="toggle-btn" id="toggleImmersiveBtn">🌍 普通模式</div>
+            <div class="daily-special" id="dailySpecialDisplay">今日特供 <span id="dailySpecialName">—</span></div>
+        </div>
+    </div>
+
+    <!-- 顾客区 -->
+    <div class="guest-area">
+        <div class="guest-row">
+            <div class="guest-emoji" id="guestEmoji">😶</div>
+            <div class="guest-bubble">
+                <div class="order-text" id="guestWant">👋 等待客人</div>
+                <div class="order-name" id="guestOrderDish">—</div>
+            </div>
+        </div>
+        <div class="queue-info">
+            <span>📋 排队人数:</span>
+            <span class="queue-count" id="queueCount">0</span>
+        </div>
+        <div class="action-buttons">
+            <button class="btn" id="newGuestBtn">🔔 接客</button>
+            <button class="btn secondary small" id="cancelGuestBtn">✖ 中断</button>
+        </div>
+    </div>
+
+    <!-- 左右双列 -->
+    <div class="row-split">
+        <div class="menu-col" id="menuList"></div>
+        <div class="recipe-col" id="recipeList"></div>
+    </div>
+
+    <!-- 厨房操作区 -->
+    <div class="counter">
+        <div class="panel">
+            <div id="ingredientSliders"></div>
+
+            <div class="salt-area">
+                <div class="salt-row">
+                    <div class="ingr-emoji">🧂</div>
+                    <div class="slider-box">
+                        <div class="slider-label">
+                            <span>盐 (g) <span class="range-hint" id="saltRangeHint"></span></span>
+                            <span><span class="current-hint">当前</span> <span id="saltValueDisplay">0.0</span></span>
+                        </div>
+                        <input type="range" id="saltSlider" min="0" max="20" value="0" step="0.1">
+                    </div>
+                </div>
+                <div class="total-info" id="totalMainWeight">食材总重: 0g</div>
+            </div>
+
+            <div id="shortageWarning" class="shortage-warning"></div>
+            <button class="btn cook-serve" id="cookAndServeBtn">🍳 烹饪并上菜</button>
+            
+            <!-- 评分区 - 现在紧贴按钮下方 -->
+            <div class="score-section">
+                <div class="plate" style="margin-top:0;">
+                    <div class="dish-icon" id="dishEmoji">🍳</div>
+                    <div class="dish-meta">
+                        <div class="dish-name" id="cookedDishName">—</div>
+                        <div class="feedback" id="cookedFeedback">等待烹饪</div>
+                    </div>
+                    <div class="score-badge" id="scoreDisplay">-</div>
+                </div>
+            </div>
+
+            <!-- 提示区 -->
+            <div class="advice-box" id="adviceText">调整比例，争取高分解锁配方</div>
+            
+            <!-- 故事碎片 - 移到了最下面 -->
+            <div id="storyFragment" class="story-fragment"></div>
+        </div>
+    </div>
+
+    <!-- 库存面板 -->
+    <div class="inventory-panel">
+        <div class="inventory-title">
+            <span>📦 库存</span>
+            <span id="totalInventoryValue">总价值: --</span>
+        </div>
+        <div class="inventory-grid" id="inventoryGrid"></div>
+    </div>
+
+    <!-- 进货商面板 -->
+    <div class="merchant-panel">
+        <div class="merchant-title">
+            <span>🛒 进货商 <span id="merchantTimeBadge">(上午价格)</span></span>
+            <span id="merchantHint">点击购买(5个/份)</span>
+        </div>
+        <div class="merchant-grid" id="merchantGrid"></div>
+    </div>
+
+    <!-- 版权声明 -->
+    <div class="copyright">
+        游戏设计 · 凌霄云弈 | 感谢您的试玩
+    </div>
+</div>
+
+<script>
+// =============================================================================
+// 厨房实验室 - 修复版
+// =============================================================================
+// 游戏设计、数值平衡、测试：凌霄云弈
+// 代码辅助：Deepseek
+// =============================================================================
+
+// =============================================================================
+// 1. 全局配置
+// =============================================================================
+const GAME_CONFIG = {
+    businessHours: { start: 6, end: 21 },
+    currencyName: {
+        normal: '金币',
+        immersive: '哈塞盾'
+    },
+    customerSpawn: {
+        intervalMinutes: 3,
+        maxQueueSize: 10,
+        offlineMax: 10,
+        offlineThresholdMinutes: 30
+    },
+    initialGold: 5000,
+    purchaseQuantity: 5  // 每次购买5个
+};
+
+// =============================================================================
+// 2. 食材库 (普通模式 + 沉浸模式名称)
+// =============================================================================
+const INGREDIENTS = {
+    tomato: { nameCN: '番茄', nameIM: '红果', emoji: '🍅' },
+    egg: { nameCN: '鸡蛋', nameIM: '羽兽蛋', emoji: '🥚' },
+    potato: { nameCN: '土豆', nameIM: '土苓', emoji: '🥔' },
+    beef: { nameCN: '牛肉', nameIM: '地行兽肉', emoji: '🥩' },
+    cucumber: { nameCN: '黄瓜', nameIM: '青瓜', emoji: '🥒' },
+    flour: { nameCN: '面粉', nameIM: '精磨粉', emoji: '🌾' },
+    shrimp: { nameCN: '虾', nameIM: '晶壳虫', emoji: '🦐' },
+    corn: { nameCN: '玉米', nameIM: '金粒', emoji: '🌽' },
+    chicken: { nameCN: '鸡肉', nameIM: '羽兽肉', emoji: '🐔' },
+    onion: { nameCN: '洋葱', nameIM: '晶衣鳞茎', emoji: '🧅' },
+    cheese: { nameCN: '奶酪', nameIM: '凝乳精块', emoji: '🧀' },
+    rice: { nameCN: '米饭', nameIM: '珍珠米', emoji: '🍚' },
+    riceNoodle: { nameCN: '河粉', nameIM: '玉带粉', emoji: '🍜' }
+};
+
+// =============================================================================
+// 3. 菜品库
+// =============================================================================
+const RECIPES = [
+    {
+        id: 'scrambledEgg',
+        nameCN: '番茄炒蛋',
+        nameImmersive: '红果金丝',
+        emoji: '🍳🍅',
+        storyCN: '将蛋液如金丝般注入沸水，配以细碎的红果粒，熬成一碗浓醇的汤羹。',
+        main: [
+            { ingId: 'tomato', target: 200 },
+            { ingId: 'egg', target: 150 }
+        ],
+        saltRange: [0.01, 0.02],
+        basePriceCN: 18
+    },
+    {
+        id: 'pastaBolognese',
+        nameCN: '番茄肉酱意面',
+        nameImmersive: '绯红肉酱星形面',
+        emoji: '🍝🥩',
+        storyCN: '星象师们观测到绯红之星后创造的庆典食物，面条如星轨般缠绕。',
+        main: [
+            { ingId: 'flour', target: 150 },
+            { ingId: 'tomato', target: 200 },
+            { ingId: 'beef', target: 150 }
+        ],
+        saltRange: [0.012, 0.022],
+        basePriceCN: 38
+    },
+    {
+        id: 'tempura',
+        nameCN: '天妇罗',
+        nameImmersive: '金衣玉裹',
+        emoji: '🍤✨',
+        storyCN: '将海产与地鲜裹上金衣，在滚油中瞬间定格，外酥内嫩。',
+        main: [
+            { ingId: 'shrimp', target: 120 },
+            { ingId: 'flour', target: 80 },
+            { ingId: 'egg', target: 50 }
+        ],
+        saltRange: [0.008, 0.015],
+        basePriceCN: 45
+    },
+    {
+        id: 'taco',
+        nameCN: '塔可',
+        nameImmersive: '三色神卷',
+        emoji: '🌮🌶️',
+        storyCN: '玉米薄饼包裹着调味肉末与鲜蔬，是太阳神赐予的便携美食。',
+        main: [
+            { ingId: 'corn', target: 100 },
+            { ingId: 'beef', target: 150 },
+            { ingId: 'tomato', target: 80 }
+        ],
+        saltRange: [0.015, 0.025],
+        basePriceCN: 28
+    },
+    {
+        id: 'curry',
+        nameCN: '咖喱鸡肉',
+        nameImmersive: '黄金香料浴',
+        emoji: '🍛🐔',
+        storyCN: '鸡肉在姜黄与孜然的怀抱中慢慢炖煮，每一丝肉都浸透太阳的香气。',
+        main: [
+            { ingId: 'chicken', target: 200 },
+            { ingId: 'potato', target: 150 },
+            { ingId: 'onion', target: 100 }
+        ],
+        saltRange: [0.012, 0.02],
+        basePriceCN: 42
+    },
+    {
+        id: 'onionSoup',
+        nameCN: '法式洋葱汤',
+        nameImmersive: '晶衣金露羹',
+        emoji: '🧅🥣',
+        storyCN: '洋葱慢慢炒出焦糖色，融入高汤，表面覆着熔化的奶酪。',
+        main: [
+            { ingId: 'onion', target: 300 },
+            { ingId: 'cheese', target: 50 }
+        ],
+        saltRange: [0.01, 0.018],
+        basePriceCN: 35
+    },
+    {
+        id: 'greekSalad',
+        nameCN: '希腊沙拉',
+        nameImmersive: '众神花园',
+        emoji: '🥗🧀',
+        storyCN: '新鲜蔬菜与羊奶酪的相遇，浇上橄榄油，是奥林匹斯山下的夏日记忆。',
+        main: [
+            { ingId: 'cucumber', target: 150 },
+            { ingId: 'tomato', target: 150 },
+            { ingId: 'cheese', target: 80 }
+        ],
+        saltRange: [0.008, 0.015],
+        basePriceCN: 32
+    },
+    {
+        id: 'bibimbap',
+        nameCN: '石锅拌饭',
+        nameImmersive: '五行调和釜',
+        emoji: '🍚🥕',
+        storyCN: '五色蔬菜围绕在米饭周围，拌入辣酱，是调和天地五行的完美一餐。',
+        main: [
+            { ingId: 'rice', target: 200 },
+            { ingId: 'beef', target: 100 },
+            { ingId: 'egg', target: 50 }
+        ],
+        saltRange: [0.01, 0.018],
+        basePriceCN: 38
+    },
+    {
+        id: 'padThai',
+        nameCN: '泰式炒河粉',
+        nameImmersive: '湄南河彩带',
+        emoji: '🍜🌶️',
+        storyCN: '河粉如湄南河的彩带，与虾仁、豆芽在热锅中翻飞，酸甜辣咸平衡。',
+        main: [
+            { ingId: 'riceNoodle', target: 200 },
+            { ingId: 'shrimp', target: 100 },
+            { ingId: 'egg', target: 80 }
+        ],
+        saltRange: [0.015, 0.025],
+        basePriceCN: 40
+    },
+    {
+        id: 'burger',
+        nameCN: '汉堡',
+        nameImmersive: '多层堡垒',
+        emoji: '🍔🥬',
+        storyCN: '两片芝麻面包夹着多汁肉饼，是快餐文化的世界征服者。',
+        main: [
+            { ingId: 'flour', target: 150 },
+            { ingId: 'beef', target: 200 },
+            { ingId: 'tomato', target: 50 }
+        ],
+        saltRange: [0.01, 0.02],
+        basePriceCN: 30
+    }
+];
+
+// =============================================================================
+// 4. 库存配置
+// =============================================================================
+const ITEM_WEIGHT = {
+    tomato: 150, egg: 50, potato: 200, beef: 1000, cucumber: 150,
+    flour: 1000, shrimp: 500, corn: 200, chicken: 1000, onion: 150,
+    cheese: 200, rice: 1000, riceNoodle: 500
+};
+
+const INGREDIENT_BASE_PRICE = {
+    tomato: 2, egg: 1.5, potato: 2, beef: 40, cucumber: 3,
+    flour: 5, shrimp: 30, corn: 3, chicken: 25, onion: 2,
+    cheese: 15, rice: 5, riceNoodle: 8
+};
+
+// =============================================================================
+// 5. 存档键名
+// =============================================================================
+const SAVE_KEYS = {
+    inventory: 'kitchen_inventory',
+    gold: 'kitchen_gold',
+    unlockedRecipes: 'kitchen_unlocked',
+    dailyStatus: 'kitchen_daily',
+    immersiveMode: 'kitchen_immersive',
+    customerQueue: 'kitchen_customers',
+    lastLoginTime: 'kitchen_last_login'
+};
+
+// =============================================================================
+// 6. 游戏状态变量
+// =============================================================================
+let selectedDishId = RECIPES[0].id;
+let currentMainAmounts = {};
+let currentSalt = 0.0;
+let unlockedRecipes = {};
+RECIPES.forEach(r => unlockedRecipes[r.id] = false);
+let gold = GAME_CONFIG.initialGold;
+let inventory = {};
+let merchantPrices = {};
+let currentPricePeriod = 'morning';
+let immersiveMode = false;
+let dailyStatus = { date: '', specialId: '', completed: false, streak: 0 };
+let customerQueue = [];
+let guestTimeout = null;
+let spawnInterval = null;
+
+// =============================================================================
+// 7. DOM元素
+// =============================================================================
+const businessStatus = document.getElementById('businessStatus');
+const currencyDisplay = document.getElementById('currencyDisplay');
+const timeDisplay = document.getElementById('timeDisplay');
+const guestEmoji = document.getElementById('guestEmoji');
+const guestWant = document.getElementById('guestWant');
+const guestOrderDish = document.getElementById('guestOrderDish');
+const queueCount = document.getElementById('queueCount');
+const menuListDiv = document.getElementById('menuList');
+const recipeListDiv = document.getElementById('recipeList');
+const ingredientSlidersDiv = document.getElementById('ingredientSliders');
+const saltSlider = document.getElementById('saltSlider');
+const saltValueDisplay = document.getElementById('saltValueDisplay');
+const saltRangeHint = document.getElementById('saltRangeHint');
+const totalMainWeightSpan = document.getElementById('totalMainWeight');
+const cookAndServeBtn = document.getElementById('cookAndServeBtn');
+const newGuestBtn = document.getElementById('newGuestBtn');
+const cancelGuestBtn = document.getElementById('cancelGuestBtn');
+const dishEmoji = document.getElementById('dishEmoji');
+const cookedDishName = document.getElementById('cookedDishName');
+const cookedFeedback = document.getElementById('cookedFeedback');
+const scoreDisplay = document.getElementById('scoreDisplay');
+const adviceText = document.getElementById('adviceText');
+const storyFragment = document.getElementById('storyFragment');
+const toggleImmersiveBtn = document.getElementById('toggleImmersiveBtn');
+const dailySpecialName = document.getElementById('dailySpecialName');
+const shortageWarning = document.getElementById('shortageWarning');
+const inventoryGrid = document.getElementById('inventoryGrid');
+const merchantGrid = document.getElementById('merchantGrid');
+const merchantTimeBadge = document.getElementById('merchantTimeBadge');
+const totalInventoryValue = document.getElementById('totalInventoryValue');
+
+// =============================================================================
+// 8. 工具函数
+// =============================================================================
+function findRecipe(id) {
+    return RECIPES.find(r => r.id === id);
+}
+
+function getIngredientName(ingId) {
+    const ing = INGREDIENTS[ingId];
+    if (!ing) return ingId;
+    return immersiveMode ? ing.nameIM : ing.nameCN;
+}
+
+function getDisplayName(recipe) {
+    return immersiveMode ? recipe.nameImmersive : recipe.nameCN;
+}
+
+function getCurrencyName() {
+    return immersiveMode ? GAME_CONFIG.currencyName.immersive : GAME_CONFIG.currencyName.normal;
+}
+
+function getCurrentTime() {
+    const now = new Date();
+    const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+    const beijingTime = new Date(utc + (8 * 60 * 60 * 1000));
+    return {
+        hour: beijingTime.getHours(),
+        minute: beijingTime.getMinutes(),
+        period: beijingTime.getHours() < 12 ? 'morning' : 'afternoon',
+        dateStr: beijingTime.toISOString().split('T')[0],
+        timestamp: beijingTime.getTime()
+    };
+}
+
+function isBusinessHours() {
+    const { hour } = getCurrentTime();
+    return hour >= GAME_CONFIG.businessHours.start && hour < GAME_CONFIG.businessHours.end;
+}
+
+function getIngredientBasePrice(ingId) {
+    return INGREDIENT_BASE_PRICE[ingId] || 5;
+}
+
+// =============================================================================
+// 9. 客人队列系统
+// =============================================================================
+function generateRandomGuest() {
+    const idx = Math.floor(Math.random() * RECIPES.length);
+    const dish = RECIPES[idx];
+    return {
+        dishId: dish.id,
+        dishName: dish.nameCN,
+        immersiveName: dish.nameImmersive
+    };
+}
+
+function generateCustomerBatch(count) {
+    const batch = [];
+    for (let i = 0; i < count; i++) {
+        batch.push(generateRandomGuest());
+    }
+    return batch;
+}
+
+function updateQueueDisplay() {
+    queueCount.innerText = customerQueue.length;
+    if (customerQueue.length === 0 && !guestTimeout) {
+        clearGuestDisplay();
+    }
+}
+
+function takeNextCustomer() {
+    if (customerQueue.length === 0) {
+        alert('暂时没有客人，请稍等');
+        return null;
+    }
+    const next = customerQueue.shift();
+    saveGame();
+    updateQueueDisplay();
+    return next;
+}
+
+function spawnCustomer() {
+    if (customerQueue.length < GAME_CONFIG.customerSpawn.maxQueueSize) {
+        customerQueue.push(generateRandomGuest());
+        saveGame();
+        updateQueueDisplay();
+    }
+}
+
+function initCustomerQueue() {
+    const lastLogin = localStorage.getItem(SAVE_KEYS.lastLoginTime);
+    const now = Date.now();
+    
+    if (lastLogin) {
+        const minutesOffline = (now - parseInt(lastLogin)) / (1000 * 60);
+        if (minutesOffline >= GAME_CONFIG.customerSpawn.offlineThresholdMinutes) {
+            customerQueue = generateCustomerBatch(GAME_CONFIG.customerSpawn.maxQueueSize);
+        } else {
+            const accumulated = Math.floor(minutesOffline / GAME_CONFIG.customerSpawn.intervalMinutes);
+            const count = Math.min(accumulated, GAME_CONFIG.customerSpawn.maxQueueSize);
+            customerQueue = generateCustomerBatch(count);
+        }
+    } else {
+        customerQueue = generateCustomerBatch(3);
+    }
+    
+    localStorage.setItem(SAVE_KEYS.lastLoginTime, now.toString());
+    updateQueueDisplay();
+}
+
+function startSpawnTimer() {
+    if (spawnInterval) clearInterval(spawnInterval);
+    spawnInterval = setInterval(() => {
+        spawnCustomer();
+    }, GAME_CONFIG.customerSpawn.intervalMinutes * 60 * 1000);
+}
+
+// =============================================================================
+// 10. 烹饪核心逻辑
+// =============================================================================
+function setMainAmountsRandom(recipe) {
+    // 随机设置主料值 (最小值的1.1倍到最大值的0.9倍之间，避免极端)
+    recipe.main.forEach(item => {
+        const min = item.target * 0.5;
+        const max = item.target * 2.0;
+        // 随机在 min*1.1 到 max*0.9 之间，避免太极端
+        const randomMin = min * 1.1;
+        const randomMax = max * 0.9;
+        currentMainAmounts[item.ingId] = Math.round((Math.random() * (randomMax - randomMin) + randomMin) * 10) / 10;
+    });
+}
+
+function calcTotalMainWeight(recipe) {
+    let total = 0;
+    recipe.main.forEach(item => {
+        total += currentMainAmounts[item.ingId] || 0;
+    });
+    return Math.round(total * 10) / 10;
+}
+
+function getSaltMinMax(recipe, total) {
+    return {
+        min: total * recipe.saltRange[0],
+        max: total * recipe.saltRange[1]
+    };
+}
+
+function updateSaltSlider() {
+    const recipe = findRecipe(selectedDishId);
+    if (!recipe) return;
+    const total = calcTotalMainWeight(recipe);
+    const { min, max } = getSaltMinMax(recipe, total);
+    const buffer = 0.5;
+    saltSlider.min = Math.max(0, min - buffer);
+    saltSlider.max = max + buffer;
+    
+    // 如果当前盐值超出新范围，拉回边界
+    if (currentSalt < saltSlider.min) currentSalt = saltSlider.min;
+    if (currentSalt > saltSlider.max) currentSalt = saltSlider.max;
+    
+    saltSlider.value = currentSalt;
+    saltValueDisplay.innerText = currentSalt.toFixed(1);
+    saltRangeHint.innerText = `(${min.toFixed(1)}-${max.toFixed(1)})`;
+    totalMainWeightSpan.innerText = `食材总重: ${total}g`;
+}
+
+function resetSaltToMid() {
+    const recipe = findRecipe(selectedDishId);
+    if (!recipe) return;
+    const total = calcTotalMainWeight(recipe);
+    const { min, max } = getSaltMinMax(recipe, total);
+    currentSalt = (min + max) / 2;
+    updateSaltSlider();
+}
+
+function calculateScore(recipe) {
+    const totalActual = calcTotalMainWeight(recipe);
+    if (totalActual === 0) return 0;
+    
+    // 计算目标总重和主料得分
+    const totalTarget = recipe.main.reduce((acc, item) => acc + item.target, 0);
+    let mainScore = 0;
+    let deviations = [];
+    
+    recipe.main.forEach(item => {
+        const targetRatio = item.target / totalTarget;
+        const actualRatio = (currentMainAmounts[item.ingId] || 0) / totalActual;
+        const deviation = Math.abs(actualRatio - targetRatio);
+        mainScore += 1 - deviation;
+        deviations.push({
+            ingId: item.ingId,
+            targetRatio,
+            actualRatio,
+            deviation,
+            isOver: actualRatio > targetRatio
+        });
+    });
+    
+    mainScore = Math.max(0, (mainScore / recipe.main.length) * 100);
+    
+    // 盐得分
+    const { min, max } = getSaltMinMax(recipe, totalActual);
+    let saltScore = 0;
+    if (currentSalt >= min && currentSalt <= max) {
+        const ideal = (min + max) / 2;
+        saltScore = 100 - (Math.abs(currentSalt - ideal) / ((max - min) || 0.1)) * 100;
+    } else {
+        saltScore = 30;
+    }
+    
+    return {
+        total: Math.round(mainScore * 0.7 + saltScore * 0.3),
+        mainScore: Math.round(mainScore),
+        saltScore: Math.round(saltScore),
+        deviations
+    };
+}
+
+function checkShortage() {
+    const recipe = findRecipe(selectedDishId);
+    if (!recipe) return { ok: true, msg: '' };
+    
+    let shortages = [];
+    for (let item of recipe.main) {
+        const required = item.target;
+        const stdWeight = ITEM_WEIGHT[item.ingId] || 100;
+        const requiredUnits = Math.ceil(required / stdWeight);
+        const available = inventory[item.ingId] || 0;
+        if (available < requiredUnits) {
+            shortages.push(`${getIngredientName(item.ingId)} 缺 ${requiredUnits - available}个`);
+        }
+    }
+    
+    if (shortages.length > 0) {
+        shortageWarning.innerText = '⚠️ 食材不足：' + shortages.join('，');
+        return { ok: false, msg: shortages.join('，') };
+    } else {
+        shortageWarning.innerText = '';
+        return { ok: true, msg: '' };
+    }
+}
+
+function consumeInventory(recipe) {
+    for (let item of recipe.main) {
+        const required = item.target;
+        const stdWeight = ITEM_WEIGHT[item.ingId] || 100;
+        const requiredUnits = Math.ceil(required / stdWeight);
+        inventory[item.ingId] = (inventory[item.ingId] || 0) - requiredUnits;
+    }
+}
+
+function calculateEarning(recipe, score) {
+    const basePrice = (recipe.basePriceCN || 30) * 10;
+    return Math.round(basePrice * (score / 100));
+}
+
+function generateAdvice(scoreResult) {
+    if (scoreResult.total >= 90) return '✨ 完美！配方已解锁 ✨';
+    
+    let advice = [];
+    
+    // 主料建议
+    scoreResult.deviations.forEach(dev => {
+        const ingName = getIngredientName(dev.ingId);
+        if (dev.deviation > 0.15) {
+            if (dev.isOver) {
+                advice.push(`${ingName} 偏多`);
+            } else {
+                advice.push(`${ingName} 偏少`);
+            }
+        } else if (dev.deviation > 0.08) {
+            if (dev.isOver) {
+                advice.push(`${ingName} 稍多`);
+            } else {
+                advice.push(`${ingName} 稍少`);
+            }
+        }
+    });
+    
+    // 盐的建议
+    const recipe = findRecipe(selectedDishId);
+    const total = calcTotalMainWeight(recipe);
+    const { min, max } = getSaltMinMax(recipe, total);
+    if (currentSalt < min - 0.5) {
+        advice.push('盐太少');
+    } else if (currentSalt > max + 0.5) {
+        advice.push('盐太多');
+    } else if (currentSalt < min) {
+        advice.push('盐稍少');
+    } else if (currentSalt > max) {
+        advice.push('盐稍多');
+    }
+    
+    if (advice.length === 0) {
+        return '比例接近了，再微调一下';
+    }
+    
+    return '⚠️ ' + advice.join('，');
+}
+
+// =============================================================================
+// 11. 渲染函数
+// =============================================================================
+function renderMenu() {
+    let html = '';
+    RECIPES.forEach(r => {
+        const selectedClass = (selectedDishId === r.id) ? 'selected' : '';
+        html += `<div class="menu-item ${selectedClass}" data-id="${r.id}">${r.emoji} ${getDisplayName(r)}</div>`;
+    });
+    menuListDiv.innerHTML = html;
+    document.querySelectorAll('.menu-item').forEach(el => {
+        el.addEventListener('click', () => {
+            selectedDishId = el.dataset.id;
+            const recipe = findRecipe(selectedDishId);
+            setMainAmountsRandom(recipe);  // 改为随机值
+            resetSaltToMid();
+            renderMenu();
+            renderIngredientSliders();
+            renderRecipeList();
+            checkShortage();
+        });
+    });
+}
+
+function renderRecipeList() {
+    const recipe = findRecipe(selectedDishId);
+    if (!recipe) return;
+    const unlocked = unlockedRecipes[recipe.id];
+    const lockClass = unlocked ? 'unlocked' : 'locked';
+    let detail = '???';
+    if (unlocked) {
+        const mains = recipe.main.map(m => `${INGREDIENTS[m.ingId]?.emoji || '❓'} ${m.target}g`).join(' · ');
+        const total = recipe.main.reduce((a, i) => a + i.target, 0);
+        const salt = (total * (recipe.saltRange[0] + recipe.saltRange[1]) / 2).toFixed(1);
+        detail = `${mains} · 🧂 ${salt}g`;
+    }
+    recipeListDiv.innerHTML = `<div class="recipe-item ${lockClass}" data-id="${recipe.id}">
+        <span class="recipe-emoji">${recipe.emoji}</span>
+        <span class="recipe-detail">${detail}</span>
+    </div>`;
+    if (unlocked) {
+        document.querySelector('.recipe-item').addEventListener('click', () => {
+            recipe.main.forEach(item => {
+                currentMainAmounts[item.ingId] = item.target;
+            });
+            const total = recipe.main.reduce((a, i) => a + i.target, 0);
+            currentSalt = total * (recipe.saltRange[0] + recipe.saltRange[1]) / 2;
+            renderIngredientSliders();
+            updateSaltSlider();
+        });
+    }
+}
+
+function renderIngredientSliders() {
+    const recipe = findRecipe(selectedDishId);
+    if (!recipe) return;
+    let html = '';
+    recipe.main.forEach(item => {
+        const ing = INGREDIENTS[item.ingId];
+        const amount = currentMainAmounts[item.ingId] || 0;
+        const min = item.target * 0.5;
+        const max = item.target * 2.0;
+        html += `
+            <div class="ingredient-row">
+                <div class="ingr-emoji">${ing?.emoji || '❓'}</div>
+                <div class="slider-box">
+                    <div class="slider-label">
+                        <span>${getIngredientName(item.ingId)} <span class="range-hint">(${Math.round(min)}-${Math.round(max)}g)</span></span>
+                        <span><span class="current-hint">当前</span> <span id="val_${item.ingId}">${amount.toFixed(1)}</span></span>
+                    </div>
+                    <input type="range" id="slider_${item.ingId}" min="${min}" max="${max}" value="${amount}" step="1">
+                </div>
+            </div>
+        `;
+    });
+    ingredientSlidersDiv.innerHTML = html;
+    recipe.main.forEach(item => {
+        const slider = document.getElementById(`slider_${item.ingId}`);
+        if (slider) {
+            slider.addEventListener('input', e => {
+                currentMainAmounts[item.ingId] = parseFloat(e.target.value);
+                document.getElementById(`val_${item.ingId}`).innerText = currentMainAmounts[item.ingId].toFixed(1);
+                updateSaltSlider();
+                checkShortage();
+            });
+        }
+    });
+}
+
+function renderInventory() {
+    let html = '';
+    let totalValue = 0;
+    for (let ingId in INGREDIENTS) {
+        const ing = INGREDIENTS[ingId];
+        const qty = inventory[ingId] || 0;
+        if (qty === 0) continue;
+        const stdWeight = ITEM_WEIGHT[ingId] || 100;
+        const totalWeight = qty * stdWeight;
+        const basePrice = getIngredientBasePrice(ingId);
+        const value = qty * basePrice * 10;
+        totalValue += value;
+        html += `<div class="inventory-item">
+            <span>${ing.emoji}</span>
+            <span>${getIngredientName(ingId)}</span>
+            <span class="count">${qty}个</span>
+            <span style="font-size:12px;">≈${totalWeight}g</span>
+        </div>`;
+    }
+    inventoryGrid.innerHTML = html || '<div style="color:#aaa;padding:8px;">仓库空空如也</div>';
+    totalInventoryValue.innerText = `总价值: ${totalValue} ${getCurrencyName()}`;
+}
+
+function refreshMerchantPrices() {
+    const { period } = getCurrentTime();
+    for (let ingId in INGREDIENTS) {
+        const basePrice = getIngredientBasePrice(ingId);
+        const fluctuation = 0.9 + Math.random() * 0.2;
+        merchantPrices[ingId] = Math.round(basePrice * 10 * fluctuation * GAME_CONFIG.purchaseQuantity);
+    }
+    currentPricePeriod = period;
+}
+
+function renderMerchant() {
+    let html = '';
+    for (let ingId in INGREDIENTS) {
+        const ing = INGREDIENTS[ingId];
+        const price = merchantPrices[ingId] || 0;
+        const canAfford = gold >= price;
+        const disabledClass = canAfford ? '' : 'disabled';
+        html += `<div class="merchant-item ${disabledClass}" data-ing-id="${ingId}" data-price="${price}">
+            <span>${ing.emoji}</span>
+            <span>${getIngredientName(ingId)} x5</span>
+            <span class="price">${price}💰</span>
+        </div>`;
+    }
+    merchantGrid.innerHTML = html;
+    
+    document.querySelectorAll('.merchant-item').forEach(item => {
+        if (item.classList.contains('disabled')) return;
+        item.addEventListener('click', () => {
+            const ingId = item.dataset.ingId;
+            const price = parseInt(item.dataset.price);
+            if (gold < price) return;
+            
+            gold -= price;
+            inventory[ingId] = (inventory[ingId] || 0) + GAME_CONFIG.purchaseQuantity;
+            
+            saveGame();
+            updateStatusBar();
+            renderInventory();
+            renderMerchant();
+            checkShortage();
+        });
+    });
+}
+
+function updateStatusBar() {
+    const { hour, minute, period } = getCurrentTime();
+    const timeStr = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+    timeDisplay.innerText = timeStr;
+    
+    const open = isBusinessHours();
+    businessStatus.innerText = open ? '🟢 营业中' : '🔴 已打烊';
+    businessStatus.className = 'business-status ' + (open ? 'open' : '');
+    
+    currencyDisplay.innerText = `💰 ${gold} ${getCurrencyName()}`;
+    
+    if (period !== currentPricePeriod) {
+        refreshMerchantPrices();
+        renderMerchant();
+    }
+    merchantTimeBadge.innerText = period === 'morning' ? '(上午价格)' : '(下午价格)';
+}
+
+function clearGuestDisplay() {
+    currentGuest = null;
+    guestEmoji.innerText = '😶';
+    guestWant.innerText = '👋 等待客人';
+    guestOrderDish.innerText = '—';
+}
+
+// =============================================================================
+// 12. 存档系统
+// =============================================================================
+function saveGame() {
+    try {
+        localStorage.setItem(SAVE_KEYS.inventory, JSON.stringify(inventory));
+        localStorage.setItem(SAVE_KEYS.gold, gold.toString());
+        localStorage.setItem(SAVE_KEYS.unlockedRecipes, JSON.stringify(unlockedRecipes));
+        localStorage.setItem(SAVE_KEYS.dailyStatus, JSON.stringify(dailyStatus));
+        localStorage.setItem(SAVE_KEYS.immersiveMode, immersiveMode.toString());
+        localStorage.setItem(SAVE_KEYS.customerQueue, JSON.stringify(customerQueue));
+    } catch (e) {
+        console.warn('存档失败', e);
+    }
+}
+
+function loadGame() {
+    try {
+        const savedInventory = localStorage.getItem(SAVE_KEYS.inventory);
+        if (savedInventory) inventory = JSON.parse(savedInventory);
+        
+        const savedGold = localStorage.getItem(SAVE_KEYS.gold);
+        if (savedGold) gold = parseInt(savedGold);
+        
+        const savedUnlocked = localStorage.getItem(SAVE_KEYS.unlockedRecipes);
+        if (savedUnlocked) unlockedRecipes = JSON.parse(savedUnlocked);
+        
+        const savedDaily = localStorage.getItem(SAVE_KEYS.dailyStatus);
+        if (savedDaily) dailyStatus = JSON.parse(savedDaily);
+        
+        const savedImmersive = localStorage.getItem(SAVE_KEYS.immersiveMode);
+        if (savedImmersive) immersiveMode = savedImmersive === 'true';
+        
+        const savedQueue = localStorage.getItem(SAVE_KEYS.customerQueue);
+        if (savedQueue) customerQueue = JSON.parse(savedQueue);
+    } catch (e) {
+        console.warn('读档失败，使用初始值', e);
+    }
+}
+
+// =============================================================================
+// 13. 初始化
+// =============================================================================
+function init() {
+    loadGame();
+    
+    const today = getCurrentTime().dateStr;
+    if (dailyStatus.date !== today) {
+        dailyStatus.date = today;
+        dailyStatus.specialId = RECIPES[Math.floor(Math.random() * RECIPES.length)].id;
+        dailyStatus.completed = false;
+    }
+    
+    if (Object.keys(inventory).length === 0) {
+        inventory = {
+            tomato: 20, egg: 50, potato: 15, beef: 5, cucumber: 10,
+            flour: 10, shrimp: 5, corn: 10, chicken: 5, onion: 15,
+            cheese: 8, rice: 8, riceNoodle: 6
+        };
+    }
+    
+    toggleImmersiveBtn.innerText = immersiveMode ? '🌌 沉浸模式' : '🌍 普通模式';
+    toggleImmersiveBtn.classList.toggle('immersive', immersiveMode);
+    
+    const specialRecipe = findRecipe(dailyStatus.specialId);
+    if (specialRecipe) dailySpecialName.innerText = getDisplayName(specialRecipe);
+    
+    const recipe = findRecipe(selectedDishId);
+    setMainAmountsRandom(recipe);
+    resetSaltToMid();
+    
+    refreshMerchantPrices();
+    initCustomerQueue();
+    startSpawnTimer();
+    
+    renderMenu();
+    renderIngredientSliders();
+    renderRecipeList();
+    renderInventory();
+    renderMerchant();
+    updateStatusBar();
+    clearGuestDisplay();
+    checkShortage();
+    
+    toggleImmersiveBtn.addEventListener('click', () => {
+        immersiveMode = !immersiveMode;
+        saveGame();
+        toggleImmersiveBtn.innerText = immersiveMode ? '🌌 沉浸模式' : '🌍 普通模式';
+        toggleImmersiveBtn.classList.toggle('immersive', immersiveMode);
+        renderMenu();
+        if (currentGuest) {
+            const gr = findRecipe(currentGuest.dishId);
+            if (gr) guestOrderDish.innerText = getDisplayName(gr);
+        }
+        const sr = findRecipe(dailyStatus.specialId);
+        if (sr) dailySpecialName.innerText = getDisplayName(sr);
+        const cr = findRecipe(selectedDishId);
+        if (cr) cookedDishName.innerText = getDisplayName(cr);
+        renderInventory();
+        renderMerchant();
+        updateStatusBar();
+    });
+    
+    cancelGuestBtn.addEventListener('click', () => {
+        if (guestTimeout) clearTimeout(guestTimeout);
+        clearGuestDisplay();
+    });
+    
+    newGuestBtn.addEventListener('click', () => {
+        if (!isBusinessHours()) {
+            alert('现在不是营业时间');
+            return;
+        }
+        if (customerQueue.length === 0) {
+            alert('暂时没有客人排队');
+            return;
+        }
+        const next = takeNextCustomer();
+        if (next) {
+            currentGuest = next;
+            guestEmoji.innerText = '😀';
+            guestWant.innerText = '我想吃...';
+            guestOrderDish.innerText = immersiveMode ? next.immersiveName : next.dishName;
+        }
+    });
+    
+    saltSlider.addEventListener('input', e => {
+        currentSalt = parseFloat(e.target.value);
+        saltValueDisplay.innerText = currentSalt.toFixed(1);
+    });
+    
+    cookAndServeBtn.addEventListener('click', () => {
+        const recipe = findRecipe(selectedDishId);
+        if (!recipe) return;
+        
+        const shortage = checkShortage();
+        if (!shortage.ok) {
+            alert('食材不足，无法烹饪');
+            return;
+        }
+        
+        const scoreResult = calculateScore(recipe);
+        const score = scoreResult.total;
+        const feedback = score >= 90 ? '✨ 完美!' : score >= 80 ? '👍 不错' : score >= 60 ? '👌 还可以' : '😕 继续努力';
+        
+        consumeInventory(recipe);
+        const earning = calculateEarning(recipe, score);
+        gold += earning;
+        
+        dishEmoji.innerText = recipe.emoji;
+        cookedDishName.innerText = getDisplayName(recipe);
+        cookedFeedback.innerText = feedback;
+        scoreDisplay.innerText = score;
+        
+        // 生成详细建议
+        adviceText.innerText = generateAdvice(scoreResult);
+        
+        if (score >= 90 && !unlockedRecipes[recipe.id]) {
+            unlockedRecipes[recipe.id] = true;
+            renderRecipeList();
+            if (recipe.storyCN) storyFragment.innerText = '📖 ' + recipe.storyCN;
+        }
+        
+        if (currentGuest) {
+            if (recipe.id === currentGuest.dishId) {
+                guestWant.innerText = `评价: ${feedback}  +${earning}💰`;
+                guestOrderDish.innerText = `得分 ${score}`;
+                guestEmoji.innerText = score >= 60 ? '😁' : '😐';
+            } else {
+                guestWant.innerText = '我点的不是这个...';
+                guestOrderDish.innerText = `我要 ${getDisplayName(findRecipe(currentGuest.dishId))}`;
+                guestEmoji.innerText = '😤';
+            }
+        } else {
+            guestWant.innerText = `练习模式  +${earning}💰`;
+            guestOrderDish.innerText = '无客人';
+        }
+        
+        saveGame();
+        updateStatusBar();
+        renderInventory();
+        renderMerchant();
+        renderIngredientSliders();
+        updateSaltSlider();
+        checkShortage();
+    });
+    
+    setInterval(() => {
+        updateStatusBar();
+    }, 60000);
+}
+
+init();
+</script>
+</body>
+</html>
