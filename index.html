@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>厨房实验室</title>
     <style>
-        /* ========== 样式区 ========== */
+        /* ========== 基础样式 ========== */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -22,237 +22,623 @@
             align-items: center;
             padding: 8px;
         }
-        .game-container {
-            width: 100%;
-            max-width: 520px;
-            background: #4a3a2a;
-            border-radius: 40px 40px 30px 30px;
-            box-shadow: 0 20px 30px rgba(0,0,0,0.6);
-            padding: 16px 12px 20px;
-            border: 3px solid #6b4f35;
-            position: relative;
+        
+        /* ========== 手机竖屏样式 ========== */
+        @media (max-width: 1199px) {
+            .game-container {
+                width: 100%;
+                max-width: 520px;
+                background: #4a3a2a;
+                border-radius: 40px 40px 30px 30px;
+                box-shadow: 0 20px 30px rgba(0,0,0,0.6);
+                padding: 16px 12px 20px;
+                border: 3px solid #6b4f35;
+            }
+            
+            /* 顶部状态栏 */
+            .mobile-top-bar {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+                margin-bottom: 12px;
+            }
+            .mobile-status-left {
+                background: #6b5238;
+                border-radius: 30px;
+                padding: 12px 8px;
+                border: 2px solid #ac8b60;
+                box-shadow: inset 0 -2px 0 #3d2e1b;
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+                height: 100%;
+                min-height: 85px;
+            }
+            .business-status {
+                font-weight: 700;
+                font-size: 16px;
+                padding: 6px 0;
+                border-radius: 20px;
+                background: #3d2e1b;
+                color: #ffdcaa;
+                text-align: center;
+                width: 100%;
+            }
+            .business-status.open {
+                background: #2d6a4f;
+                color: #e9ffdb;
+            }
+            .time-box {
+                background: #3d2e1b;
+                border-radius: 20px;
+                padding: 6px 0;
+                color: #ffdcaa;
+                font-size: 16px;
+                text-align: center;
+                width: 100%;
+            }
+            .mobile-status-right {
+                background: #6b5238;
+                border-radius: 30px;
+                padding: 12px 8px;
+                border: 2px solid #ac8b60;
+                box-shadow: inset 0 -2px 0 #3d2e1b;
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 6px;
+                height: 100%;
+                min-height: 85px;
+                align-content: center;
+            }
+            .toggle-btn {
+                background: #947b58;
+                border: 2px solid #e7c594;
+                border-radius: 30px;
+                padding: 6px 0;
+                font-size: 14px;
+                font-weight: 700;
+                color: #ffebc0;
+                box-shadow: 0 3px 0 #5d422b;
+                cursor: pointer;
+                text-align: center;
+                flex: 1 1 auto;
+                min-width: 80px;
+            }
+            .currency-display {
+                background: #b59d6b;
+                border-radius: 30px;
+                padding: 6px 0;
+                font-weight: 800;
+                color: #2d2a17;
+                font-size: 14px;
+                text-align: center;
+                flex: 1 1 auto;
+                min-width: 80px;
+            }
+            .daily-special-mobile {
+                background: #8b6f4c;
+                border-radius: 30px;
+                padding: 10px 16px;
+                border: 2px solid #dbb47a;
+                color: #fff1c1;
+                font-weight: 600;
+                margin-bottom: 12px;
+                width: 100%;
+                text-align: center;
+            }
+            .guest-menu-row {
+                display: flex;
+                gap: 8px;
+                margin-bottom: 16px;
+            }
+            .guest-area {
+                flex: 1;
+                background: #8b6f4c;
+                border-radius: 30px;
+                padding: 12px;
+                border: 2px solid #b99e7c;
+                box-shadow: inset 0 -5px 0 #5d3e25, 0 8px 0 #3d2e1b;
+            }
+            .guest-row {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+            .guest-emoji {
+                width: 50px;
+                height: 50px;
+                font-size: 36px;
+                background: #f0dbb4;
+                border-radius: 40px 40px 20px 20px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-shadow: 0 4px 0 #8b6f4c;
+                border: 2px solid #ffcf9a;
+            }
+            .guest-bubble {
+                flex: 1;
+                background: #fff9e6;
+                border-radius: 30px 30px 30px 8px;
+                padding: 8px 10px;
+                border: 2px solid #dbb47a;
+                box-shadow: 0 3px 0 #997b56;
+            }
+            .order-text { font-size: 12px; }
+            .order-name { font-size: 15px; }
+            .menu-col {
+                flex: 1;
+                background: #6b5238;
+                border-radius: 30px;
+                padding: 8px;
+                border: 2px solid #ac8b60;
+                box-shadow: inset 0 0 5px #2f2419;
+            }
+            .menu-title {
+                color: #ffdcaa;
+                font-weight: 700;
+                font-size: 14px;
+                text-align: center;
+                margin-bottom: 6px;
+                padding: 2px;
+                background: #4a3a2a;
+                border-radius: 20px;
+            }
+            .menu-items {
+                max-height: 100px;
+                overflow-y: auto;
+            }
+            .recipe-col {
+                background: #6b5238;
+                border-radius: 30px;
+                padding: 8px;
+                border: 2px solid #ac8b60;
+                box-shadow: inset 0 0 5px #2f2419;
+                margin-bottom: 16px;
+            }
+            .recipe-title {
+                color: #ffda9e;
+                font-weight: 700;
+                font-size: 14px;
+                text-align: center;
+                margin-bottom: 6px;
+                padding: 2px;
+                background: #4a3a2a;
+                border-radius: 20px;
+            }
+            .recipe-items {
+                max-height: 100px;
+                overflow-y: auto;
+            }
+            .queue-info {
+                margin: 6px 0;
+                font-size: 12px;
+                display: flex;
+                justify-content: space-between;
+                color: #ffe5b9;
+            }
+            .queue-count { 
+                background: #3d2e1b;
+                padding: 2px 8px;
+                border-radius: 20px;
+            }
+            .action-buttons { 
+                display: flex;
+                gap: 6px;
+                margin-top: 6px;
+            }
+            .btn { 
+                padding: 8px 0; 
+                font-size: 14px;
+                background: #f5c284;
+                border-radius: 30px;
+                border: 2px solid #ffdaa0;
+                box-shadow: 0 3px 0 #b27d48;
+                flex: 1;
+                text-align: center;
+                cursor: pointer;
+            }
+            .cooking-row {
+                display: flex;
+                gap: 8px;
+                margin: 16px 0;
+            }
+            .cooking-left {
+                flex: 1;
+                display: flex;
+            }
+            .cooking-right {
+                flex: 1;
+                display: flex;
+            }
+            .btn.cook-serve {
+                background: #a5d6a5;
+                box-shadow: 0 4px 0 #5f8b5f;
+                color: #1d3a1d;
+                border-color: #c0ebc0;
+                font-size: 18px;
+                padding: 0;
+                height: 100%;
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .plate {
+                background: #e0d3bc;
+                border-radius: 40px 40px 20px 20px;
+                padding: 12px 10px;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                border: 3px solid #ae9472;
+                box-shadow: 0 4px 0 #6c5a41;
+                width: 100%;
+                min-height: 85px;
+            }
+            .dish-icon {
+                width: 45px;
+                height: 45px;
+                font-size: 28px;
+                background: #cf5e2a;
+                border-radius: 50% 50% 30% 30%;
+                border: 2px solid #ffb156;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+            }
+            .dish-meta {
+                flex: 1;
+            }
+            .dish-name { font-size: 14px; }
+            .score-badge { 
+                background: #ffeeab;
+                padding: 4px 8px;
+                border-radius: 30px;
+                font-size: 16px;
+                margin-left: auto;
+                flex-shrink: 0;
+            }
+            .mobile-buttons {
+                display: flex;
+                gap: 10px;
+                margin: 16px 0;
+            }
+            .mobile-btn {
+                flex: 1;
+                background: #947b58;
+                border: 2px solid #e7c594;
+                border-radius: 40px;
+                padding: 12px 0;
+                font-size: 16px;
+                font-weight: 700;
+                color: #ffebc0;
+                box-shadow: 0 4px 0 #5d422b;
+                cursor: pointer;
+                text-align: center;
+            }
+            .pc-only { display: none; }
+        }
+        
+        /* ========== 电脑横屏适配 ========== */
+        @media (min-width: 1200px) {
+            .game-container {
+                max-width: 1400px;
+                width: 100%;
+                background: #4a3a2a;
+                border-radius: 40px;
+                box-shadow: 0 20px 30px rgba(0,0,0,0.6);
+                padding: 24px;
+                border: 3px solid #6b4f35;
+                display: grid;
+                grid-template-columns: 400px 1fr;
+                grid-template-rows: auto auto 1fr auto;
+                gap: 20px;
+                grid-template-areas: 
+                    "left status"
+                    "left cooking"
+                    "left cooking"
+                    "bottom bottom";
+                height: calc(100vh - 50px);
+                max-height: 1000px;
+                overflow: hidden;
+            }
+            .left-column {
+                grid-area: left;
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                height: 100%;
+                overflow-y: auto;
+                padding-right: 5px;
+            }
+            .guest-area {
+                background: #8b6f4c;
+                border-radius: 30px;
+                padding: 20px;
+                border: 2px solid #b99e7c;
+                box-shadow: inset 0 -5px 0 #5d3e25, 0 8px 0 #3d2e1b;
+            }
+            .guest-row {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+            }
+            .guest-emoji {
+                width: 90px;
+                height: 90px;
+                font-size: 60px;
+                background: #f0dbb4;
+                border-radius: 50px 50px 25px 25px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-shadow: 0 6px 0 #8b6f4c, 0 8px 8px rgba(0,0,0,0.3);
+                border: 3px solid #ffcf9a;
+            }
+            .guest-bubble {
+                flex: 1;
+                background: #fff9e6;
+                border-radius: 35px 35px 35px 8px;
+                padding: 12px 16px;
+                border: 3px solid #dbb47a;
+                box-shadow: 0 4px 0 #997b56;
+            }
+            .order-text {
+                font-weight: bold;
+                color: #3a2c1c;
+                font-size: 16px;
+            }
+            .order-name {
+                font-weight: 800;
+                color: #a1521d;
+                margin-top: 4px;
+                font-size: 24px;
+            }
+            .queue-info {
+                display: flex;
+                justify-content: space-between;
+                margin: 12px 0;
+                color: #ffe5b9;
+            }
+            .queue-count {
+                background: #3d2e1b;
+                padding: 4px 12px;
+                border-radius: 30px;
+            }
+            .action-buttons {
+                display: flex;
+                gap: 10px;
+            }
+            .btn {
+                flex: 1;
+                background: #f5c284;
+                border: none;
+                border-radius: 40px;
+                padding: 14px 0;
+                font-size: 18px;
+                font-weight: 800;
+                color: #3e2c16;
+                box-shadow: 0 5px 0 #b27d48, 0 4px 8px black;
+                cursor: pointer;
+                border: 2px solid #ffdaa0;
+                text-align: center;
+            }
+            .btn.secondary { background: #cfb28b; box-shadow: 0 5px 0 #8e6f47; }
+            .menu-section, .recipe-section {
+                background: #6b5238;
+                border-radius: 30px;
+                padding: 15px;
+                border: 2px solid #ac8b60;
+                box-shadow: inset 0 -3px 0 #3d2e1b;
+            }
+            .section-title {
+                color: #ffdcaa;
+                font-weight: 700;
+                font-size: 18px;
+                text-align: center;
+                margin-bottom: 10px;
+                padding: 5px;
+                background: #4a3a2a;
+                border-radius: 30px;
+            }
+            .menu-items, .recipe-items {
+                max-height: 140px;
+                overflow-y: auto;
+                padding-right: 5px;
+            }
+            .top-bar {
+                grid-area: status;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                background: #6b5238;
+                border-radius: 60px;
+                padding: 15px 25px;
+                border: 2px solid #ac8b60;
+                box-shadow: inset 0 -3px 0 #3d2e1b;
+            }
+            .status-row {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+            }
+            .business-status {
+                font-weight: 700;
+                padding: 6px 16px;
+                border-radius: 30px;
+                background: #3d2e1b;
+                color: #ffdcaa;
+            }
+            .business-status.open {
+                background: #2d6a4f;
+                color: #e9ffdb;
+            }
+            .currency-display {
+                background: #b59d6b;
+                border-radius: 40px;
+                padding: 6px 20px;
+                font-weight: 800;
+                color: #2d2a17;
+            }
+            .time-display { color: #ffe5b9; }
+            .feature-row {
+                display: flex;
+                gap: 15px;
+                align-items: center;
+            }
+            .toggle-btn {
+                background: #947b58;
+                border: 2px solid #e7c594;
+                border-radius: 40px;
+                padding: 8px 20px;
+                font-weight: 700;
+                color: #ffebc0;
+                box-shadow: 0 4px 0 #5d422b;
+                cursor: pointer;
+            }
+            .daily-special {
+                background: #8b6f4c;
+                border-radius: 40px;
+                padding: 8px 20px;
+                border: 2px solid #dbb47a;
+                color: #fff1c1;
+            }
+            .daily-special span {
+                color: #ffb347;
+                margin-left: 8px;
+            }
+            .counter {
+                grid-area: cooking;
+                background: #bd9a6b;
+                border-radius: 30px;
+                padding: 25px;
+                box-shadow: inset 0 -5px 0 #7e5d38, 0 8px 0 #4f3a24;
+                border: 2px solid #e7c594;
+                height: 100%;
+                overflow: hidden;
+            }
+            .cooking-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+                height: 100%;
+            }
+            .ingredients-area {
+                background: #5f4630;
+                border-radius: 30px;
+                padding: 20px;
+                border: 3px solid #ad8759;
+                overflow-y: auto;
+                height: 100%;
+            }
+            .result-area {
+                background: #5f4630;
+                border-radius: 30px;
+                padding: 20px;
+                border: 3px solid #ad8759;
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+                height: 100%;
+                overflow-y: auto;
+            }
+            .btn.cook-serve {
+                background: #a5d6a5;
+                box-shadow: 0 5px 0 #5f8b5f;
+                color: #1d3a1d;
+                border-color: #c0ebc0;
+                font-size: 22px;
+                padding: 15px 0;
+                width: 100%;
+                cursor: pointer;
+            }
+            .plate {
+                background: #e0d3bc;
+                border-radius: 80px 80px 40px 40px;
+                padding: 15px;
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                border: 4px solid #ae9472;
+                box-shadow: 0 6px 0 #6c5a41;
+            }
+            .dish-icon {
+                width: 70px;
+                height: 70px;
+                font-size: 38px;
+                background: #cf5e2a;
+                border-radius: 50% 50% 30% 30%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: 3px solid #ffb156;
+            }
+            .dish-name { font-size: 22px; font-weight: 800; color: #1e2f1c; }
+            .score-badge { 
+                background: #ffeeab;
+                padding: 8px 16px;
+                border-radius: 40px;
+                font-weight: 800;
+                font-size: 26px;
+                color: #003f1f;
+                border: 2px solid gold;
+            }
+            .action-buttons-below {
+                display: flex;
+                gap: 15px;
+                margin-top: 15px;
+            }
+            .action-btn {
+                flex: 1;
+                background: #947b58;
+                border: 2px solid #e7c594;
+                border-radius: 40px;
+                padding: 12px 0;
+                font-size: 18px;
+                font-weight: 700;
+                color: #ffebc0;
+                box-shadow: 0 4px 0 #5d422b;
+                cursor: pointer;
+                text-align: center;
+            }
+            .bottom-bar {
+                grid-area: bottom;
+                display: flex;
+                gap: 15px;
+                justify-content: center;
+                background: #6b5238;
+                border-radius: 60px;
+                padding: 15px 25px;
+                border: 2px solid #ac8b60;
+                box-shadow: inset 0 -3px 0 #3d2e1b;
+            }
+            .bottom-btn {
+                background: #947b58;
+                border: 2px solid #e7c594;
+                border-radius: 40px;
+                padding: 10px 30px;
+                font-size: 20px;
+                font-weight: 700;
+                color: #ffebc0;
+                box-shadow: 0 4px 0 #5d422b;
+                cursor: pointer;
+            }
+            .mobile-only { display: none; }
         }
 
-        /* 顶部信息栏 */
-        .top-bar {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-bottom: 16px;
-        }
-        .status-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: #6b5238;
-            border-radius: 60px;
-            padding: 8px 16px;
-            border: 2px solid #ac8b60;
-            box-shadow: inset 0 -3px 0 #3d2e1b;
-        }
-        .business-status {
-            font-weight: 700;
-            font-size: 16px;
-            padding: 4px 12px;
-            border-radius: 30px;
-            background: #3d2e1b;
-            color: #ffdcaa;
-        }
-        .business-status.open {
-            background: #2d6a4f;
-            color: #e9ffdb;
-        }
-        .currency-display {
-            background: #b59d6b;
-            border-radius: 40px;
-            padding: 6px 16px;
-            font-weight: 800;
-            color: #2d2a17;
-            font-size: 18px;
-        }
-        .time-display {
-            color: #ffe5b9;
-            font-size: 14px;
-        }
-        .feature-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: #6b5238;
-            border-radius: 60px;
-            padding: 8px 12px;
-            border: 2px solid #ac8b60;
-            box-shadow: inset 0 -3px 0 #3d2e1b;
-        }
-        .toggle-btn {
-            background: #947b58;
-            border: 2px solid #e7c594;
-            border-radius: 40px;
-            padding: 8px 16px;
-            font-size: 16px;
-            font-weight: 700;
-            color: #ffebc0;
-            box-shadow: 0 3px 0 #5d422b;
-            cursor: pointer;
-            transition: 0.02s;
-        }
-        .toggle-btn:active {
-            transform: translateY(3px);
-            box-shadow: 0 0 0 #5d422b;
-        }
-        .toggle-btn.immersive {
-            background: #b59d6b;
-            color: #2d2a17;
-        }
-        .daily-special {
-            background: #8b6f4c;
-            border-radius: 40px;
-            padding: 8px 16px;
-            border: 2px solid #dbb47a;
-            font-weight: 600;
-            color: #fff1c1;
-        }
-        .daily-special span {
-            color: #ffb347;
-            font-size: 18px;
-            margin-left: 6px;
-        }
-
-        /* 顾客区域 */
-        .guest-area {
-            background: #8b6f4c;
-            padding: 16px 12px 12px;
-            border-radius: 50px 50px 25px 25px;
-            box-shadow: inset 0 -5px 0 #5d3e25, 0 8px 0 #3d2e1b;
-            margin-bottom: 16px;
-            border: 2px solid #b99e7c;
-        }
-        .guest-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .guest-emoji {
-            background: #f0dbb4;
-            width: 70px;
-            height: 70px;
-            border-radius: 50px 50px 25px 25px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 50px;
-            box-shadow: 0 6px 0 #8b6f4c, 0 8px 8px rgba(0,0,0,0.3);
-            border: 3px solid #ffcf9a;
-        }
-        .guest-bubble {
-            flex: 1;
-            background: #fff9e6;
-            border-radius: 35px 35px 35px 8px;
-            padding: 10px 14px;
-            border: 3px solid #dbb47a;
-            box-shadow: 0 4px 0 #997b56;
-        }
-        .order-text {
-            font-size: 15px;
-            font-weight: bold;
-            color: #3a2c1c;
-        }
-        .order-name {
-            font-size: 22px;
-            font-weight: 800;
-            color: #a1521d;
-            margin-top: 2px;
-        }
-        .queue-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 8px;
-            padding: 0 4px;
-            color: #ffe5b9;
-            font-size: 14px;
-        }
-        .queue-count {
-            background: #3d2e1b;
-            padding: 4px 12px;
-            border-radius: 30px;
-            font-weight: 700;
-        }
-        .action-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 12px;
-        }
-        .btn {
-            flex: 1;
-            background: #f5c284;
-            border: none;
-            border-radius: 40px;
-            padding: 14px 0;
-            font-size: 20px;
-            font-weight: 800;
-            color: #3e2c16;
-            box-shadow: 0 5px 0 #b27d48, 0 4px 8px black;
-            transition: 0.05s linear;
-            text-align: center;
-            cursor: pointer;
-            border: 2px solid #ffdaa0;
-        }
-        .btn:active { transform: translateY(4px); box-shadow: 0 1px 0 #b27d48; }
-        .btn.secondary { background: #cfb28b; box-shadow: 0 5px 0 #8e6f47; }
-        .btn.disabled {
-            opacity: 0.5;
-            pointer-events: none;
-            filter: grayscale(0.5);
-        }
-        .btn.cook-serve {
-            background: #a5d6a5;
-            box-shadow: 0 5px 0 #5f8b5f;
-            color: #1d3a1d;
-            border-color: #c0ebc0;
-            font-size: 24px;
-            padding: 18px 0;
-            width: 100%;
-            margin: 8px 0 4px;
-        }
-
-        /* 左右双列 */
-        .row-split {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 16px;
-            min-height: 150px;
-        }
-        .menu-col {
-            flex: 1.2;
-            background: #6b5238;
-            border-radius: 30px;
-            padding: 10px 6px;
-            border: 2px solid #ac8b60;
-            box-shadow: inset 0 0 8px #2f2419;
-            overflow-y: auto;
-            max-height: 180px;
-        }
-        .menu-title {
-            color: #ffdcaa;
-            font-weight: 700;
-            font-size: 15px;
-            text-align: center;
-            margin-bottom: 6px;
-        }
+        /* ========== 通用样式 ========== */
         .menu-item {
             background: #947b58;
             margin: 5px 0;
-            padding: 8px 4px;
+            padding: 8px;
             border-radius: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             border: 2px solid #c9a15b;
             box-shadow: 0 3px 0 #5d422b;
             cursor: pointer;
             font-weight: 700;
-            font-size: 15px;
             color: #23200e;
             text-align: center;
         }
@@ -261,39 +647,17 @@
             border-color: #fff3b3;
             box-shadow: 0 3px 0 #a56e31;
         }
-
-        .recipe-col {
-            flex: 1;
-            background: #5f4a32;
-            border-radius: 30px;
-            padding: 10px 6px;
-            border: 2px solid #b39263;
-            box-shadow: inset 0 0 6px #20180f;
-            overflow-y: auto;
-            max-height: 180px;
-        }
-        .recipe-title {
-            color: #ffda9e;
-            font-weight: 700;
-            font-size: 15px;
-            text-align: center;
-            margin-bottom: 6px;
-        }
         .recipe-item {
             background: #7c6446;
             margin: 5px 0;
-            padding: 8px 6px;
+            padding: 8px;
             border-radius: 25px;
             border: 1px solid #ccaa73;
             color: #f7efd6;
-            font-size: 13px;
-            font-weight: 500;
             display: flex;
-            flex-wrap: wrap;
-            align-items: center;
             justify-content: space-between;
             cursor: pointer;
-            transition: 0.1s;
+            font-size: 14px;
         }
         .recipe-item.locked {
             opacity: 0.5;
@@ -306,137 +670,27 @@
             background: #9b855d;
             border-color: #ffdd99;
         }
-        .recipe-item.unlocked:active {
-            transform: scale(0.98);
-            background: #b79b6b;
-        }
-
-        /* 库存面板 */
-        .inventory-panel {
-            background: #5f4630;
-            border-radius: 30px;
-            padding: 12px;
-            margin: 16px 0 8px;
-            border: 3px solid #ad8759;
-        }
-        .inventory-title {
-            color: #ffda9e;
-            font-weight: 700;
-            font-size: 16px;
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-        }
-        .inventory-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-        .inventory-item {
-            background: #7c6446;
-            border-radius: 30px;
-            padding: 8px 10px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            border: 1px solid #ccaa73;
-            color: #f7efd6;
-            font-size: 14px;
-        }
-        .inventory-item .count {
-            font-weight: 800;
-            color: #ffd966;
-            margin-left: auto;
-        }
-
-        /* 进货商面板 */
-        .merchant-panel {
-            background: #5f4630;
-            border-radius: 30px;
-            padding: 12px;
-            margin: 16px 0 8px;
-            border: 3px solid #ad8759;
-        }
-        .merchant-title {
-            color: #ffda9e;
-            font-weight: 700;
-            font-size: 16px;
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-        }
-        .merchant-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-        .merchant-item {
-            background: #7c6446;
-            border-radius: 30px;
-            padding: 8px 10px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            border: 1px solid #ccaa73;
-            color: #f7efd6;
-            font-size: 14px;
-            cursor: pointer;
-        }
-        .merchant-item:active {
-            background: #9b855d;
-        }
-        .merchant-item .price {
-            font-weight: 800;
-            color: #ffd966;
-            margin-left: auto;
-        }
-        .merchant-item.disabled {
-            opacity: 0.5;
-            pointer-events: none;
-        }
-
-        /* 厨房操作区 */
-        .counter {
-            background: #bd9a6b;
-            border-radius: 35px 35px 20px 20px;
-            padding: 16px 12px;
-            box-shadow: inset 0 -5px 0 #7e5d38, 0 8px 0 #4f3a24;
-            border: 2px solid #e7c594;
-            margin-top: 4px;
-        }
-        .panel {
-            background: #5f4630;
-            border-radius: 30px;
-            padding: 14px 12px;
-            border: 3px solid #ad8759;
-            box-shadow: inset 0 0 5px #2b1f12;
-        }
         .ingredient-row {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 12px;
             margin: 12px 0;
         }
         .ingr-emoji {
             background: #ecdbb9;
-            width: 46px;
-            height: 46px;
             border-radius: 25px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 30px;
             border: 2px solid #c9a769;
             box-shadow: 0 3px 0 #836e48;
             flex-shrink: 0;
+            width: 46px;
+            height: 46px;
+            font-size: 30px;
         }
         .slider-box {
-            flex: 4;
-            min-width: 160px;
+            flex: 1;
         }
         .slider-label {
             display: flex;
@@ -446,23 +700,14 @@
             margin-bottom: 4px;
             font-size: 14px;
         }
-        .slider-label .range-hint {
-            color: #ffd966;
-            font-size: 12px;
-        }
-        .current-hint {
-            color: #ffd0a0;
-            font-size: 12px;
-            margin-left: 4px;
-        }
+        .range-hint { color: #ffd966; }
+        .current-hint { color: #ffd0a0; }
         input[type=range] {
             width: 100%;
             height: 16px;
             background: #eec18e;
             border-radius: 20px;
             -webkit-appearance: none;
-            appearance: none;
-            box-shadow: inset 0 2px 5px #413222;
         }
         input[type=range]::-webkit-slider-thumb {
             -webkit-appearance: none;
@@ -477,84 +722,199 @@
         .salt-area {
             background: #847054;
             border-radius: 30px;
-            padding: 12px 10px;
-            margin: 12px 0 6px;
+            padding: 16px;
+            margin: 12px 0;
             border: 2px solid #cfa66b;
         }
         .salt-row {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 12px;
         }
         .total-info {
             color: #ffe5b9;
             font-weight: 600;
-            font-size: 15px;
             margin-top: 8px;
             text-align: right;
         }
         .shortage-warning {
             background: #9d4e4e;
             border-radius: 20px;
-            padding: 6px 12px;
+            padding: 8px 12px;
             margin: 8px 0;
             color: #ffebc0;
-            font-size: 14px;
             border-left: 5px solid #ff8a8a;
         }
         .story-fragment {
             background: #3d2e1b;
             border-radius: 20px;
             padding: 8px 12px;
-            margin: 10px 0 5px;
+            margin: 8px 0;
             color: #ffdbb5;
-            font-size: 14px;
             font-style: italic;
             border-left: 5px solid #b48b4b;
         }
         .advice-box {
             background: #3d3426;
             border-radius: 30px;
-            padding: 8px 12px;
-            margin: 10px 0 0;
+            padding: 10px 16px;
+            margin: 8px 0 0;
             color: #ffdcaa;
-            font-size: 14px;
             border: 1px solid #b48b4b;
         }
-        .plate {
-            background: #e0d3bc;
-            border-radius: 80px 80px 40px 40px;
-            padding: 12px 16px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            border: 4px solid #ae9472;
-            box-shadow: 0 6px 0 #6c5a41;
-            margin-top: 12px;
+        .feedback { 
+            color: #f9ffd6; 
+            background: #4e6b3d; 
+            padding: 4px 10px; 
+            border-radius: 30px; 
+            display: inline-block; 
+            font-size: 14px;
         }
-        .dish-icon {
-            background: #cf5e2a;
-            width: 64px;
-            height: 64px;
-            border-radius: 50% 50% 30% 30%;
+        .merchant-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .shopping-list {
+            background: #5f4630;
+            border-radius: 30px;
+            padding: 15px;
+            border: 2px solid #ad8759;
+        }
+        .shopping-title {
+            color: #ffda9e;
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .shopping-items {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+        .shopping-item {
+            background: #2d6a4f;
+            border-radius: 30px;
+            padding: 8px 12px;
             display: flex;
             align-items: center;
+            gap: 8px;
+            border: 1px solid #8bc34a;
+            color: #e9ffdb;
+            font-size: 14px;
+        }
+        .shop-items {
+            background: #5f4630;
+            border-radius: 30px;
+            padding: 15px;
+            border: 2px solid #ad8759;
+        }
+        .shop-title {
+            color: #ffda9e;
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .inventory-grid, .merchant-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+        .inventory-item, .merchant-item {
+            background: #7c6446;
+            border-radius: 30px;
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid #ccaa73;
+            color: #f7efd6;
+            font-size: 14px;
+        }
+        .merchant-item {
+            cursor: pointer;
+        }
+        .merchant-item.disabled {
+            opacity: 0.3;
+            pointer-events: none;
+            background: #5d4b36;
+        }
+        .merchant-item.highlight {
+            background: #2d6a4f;
+            border-color: #8bc34a;
+        }
+        .inventory-item .count, .merchant-item .price {
+            font-weight: 800;
+            color: #ffd966;
+            margin-left: auto;
+        }
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            display: flex;
             justify-content: center;
-            font-size: 32px;
-            border: 3px solid #ffb156;
-            box-shadow: inset 0 -5px 0 #863d14;
+            align-items: center;
+            z-index: 1000;
+            display: none;
         }
-        .dish-meta { flex: 1; }
-        .dish-name { font-size: 22px; font-weight: 800; color: #1e2f1c; }
-        .feedback { color: #f9ffd6; background: #4e6b3d; padding: 6px 10px; border-radius: 30px; font-size: 16px; font-weight: 600; display: inline-block; }
-        .score-badge { background: #ffeeab; padding: 6px 10px; border-radius: 40px; font-weight: 800; font-size: 26px; color: #003f1f; border: 2px solid gold; }
-        
-        /* 评分区域 - 现在在按钮下方 */
-        .score-section {
-            margin: 8px 0 4px;
+        .modal-content {
+            background: #5f4630;
+            border-radius: 40px;
+            padding: 30px;
+            width: 600px;
+            max-width: 90vw;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 4px solid #ad8759;
         }
-        
-        /* 版权声明 */
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            color: #ffda9e;
+            font-size: 24px;
+            font-weight: 700;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .modal-close {
+            background: #9d4e4e;
+            border: none;
+            border-radius: 30px;
+            padding: 10px 20px;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .toast {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #2d6a4f;
+            border-radius: 40px;
+            padding: 20px 30px;
+            color: #e9ffdb;
+            font-size: 18px;
+            font-weight: 700;
+            border: 3px solid #8bc34a;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            z-index: 2000;
+            display: none;
+            text-align: center;
+            min-width: 250px;
+        }
         .copyright {
             text-align: center;
             color: #8b7a5a;
@@ -563,128 +923,262 @@
             padding-top: 8px;
             border-top: 1px solid #6b5a3a;
         }
-        .footer-notes { color: #bba16f; text-align: center; margin-top: 8px; font-size: 12px; }
+        /* 伙伴面板样式 */
+        .partner-item {
+            background: #7c6446;
+            border-radius: 30px;
+            padding: 15px;
+            margin: 10px 0;
+            border: 2px solid #ccaa73;
+            color: #f7efd6;
+        }
+        .partner-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 8px 0;
+        }
+        .shift-select {
+            background: #947b58;
+            border: 2px solid #e7c594;
+            border-radius: 30px;
+            padding: 5px 15px;
+            color: #ffebc0;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .shift-option {
+            background: #5f4630;
+            color: white;
+        }
     </style>
 </head>
 <body>
 <div class="game-container">
-    <!-- 顶部信息栏 -->
-    <div class="top-bar">
+    <!-- 电脑版顶部 -->
+    <div class="top-bar pc-only">
         <div class="status-row">
             <div class="business-status" id="businessStatus">🕒 营业中</div>
             <div class="currency-display" id="currencyDisplay">💰 0 金币</div>
             <div class="time-display" id="timeDisplay">12:00</div>
         </div>
         <div class="feature-row">
-            <div class="toggle-btn" id="toggleImmersiveBtn">🌍 普通模式</div>
-            <div class="daily-special" id="dailySpecialDisplay">今日特供 <span id="dailySpecialName">—</span></div>
+            <div class="toggle-btn" id="toggleImmersiveBtn">🌍 普通文本</div>
+            <div class="daily-special" id="dailySpecialDisplay">今日热卖 <span id="dailySpecialName">—</span></div>
         </div>
     </div>
+    <!-- 手机版顶部 -->
+    <div class="mobile-top-bar mobile-only">
+        <div class="mobile-status-left">
+            <div class="business-status" id="businessStatusMobile">🕒 营业中</div>
+            <div class="time-box" id="timeDisplayMobile">12:00</div>
+        </div>
+        <div class="mobile-status-right">
+            <div class="toggle-btn" id="toggleImmersiveBtnMobile">🌍 普通文本</div>
+            <div class="currency-display" id="currencyDisplayMobile">💰 0 金币</div>
+        </div>
+    </div>
+    <div class="daily-special-mobile mobile-only" id="dailySpecialMobile">
+        今日热卖 <span id="dailySpecialNameMobile">—</span>
+    </div>
 
-    <!-- 顾客区 -->
-    <div class="guest-area">
-        <div class="guest-row">
-            <div class="guest-emoji" id="guestEmoji">😶</div>
-            <div class="guest-bubble">
-                <div class="order-text" id="guestWant">👋 等待客人</div>
-                <div class="order-name" id="guestOrderDish">—</div>
+    <!-- 左侧列 -->
+    <div class="left-column">
+        <!-- 手机版顾客+菜单 -->
+        <div class="guest-menu-row mobile-only">
+            <div class="guest-area">
+                <div class="guest-row">
+                    <div class="guest-emoji" id="guestEmojiMobile">😶</div>
+                    <div class="guest-bubble">
+                        <div class="order-text" id="guestWantMobile">👋 等待客人</div>
+                        <div class="order-name" id="guestOrderDishMobile">—</div>
+                    </div>
+                </div>
+                <div class="queue-info">
+                    <span>📋 排队:</span>
+                    <span class="queue-count" id="queueCountMobile">0</span>
+                </div>
+                <div class="action-buttons">
+                    <div class="btn" id="newGuestBtnMobile">🔔 接客</div>
+                    <div class="btn secondary" id="cancelGuestBtnMobile">✖ 中断</div>
+                </div>
+            </div>
+            <div class="menu-col">
+                <div class="menu-title">📋 菜品菜单</div>
+                <div class="menu-items" id="menuListMobile"></div>
             </div>
         </div>
-        <div class="queue-info">
-            <span>📋 排队人数:</span>
-            <span class="queue-count" id="queueCount">0</span>
+        <!-- 电脑版顾客区 -->
+        <div class="guest-area pc-only">
+            <div class="guest-row">
+                <div class="guest-emoji" id="guestEmoji">😶</div>
+                <div class="guest-bubble">
+                    <div class="order-text" id="guestWant">👋 等待客人</div>
+                    <div class="order-name" id="guestOrderDish">—</div>
+                </div>
+            </div>
+            <div class="queue-info">
+                <span>📋 排队人数:</span>
+                <span class="queue-count" id="queueCount">0</span>
+            </div>
+            <div class="action-buttons">
+                <div class="btn" id="newGuestBtn">🔔 接客</div>
+                <div class="btn secondary" id="cancelGuestBtn">✖ 中断</div>
+            </div>
         </div>
-        <div class="action-buttons">
-            <button class="btn" id="newGuestBtn">🔔 接客</button>
-            <button class="btn secondary small" id="cancelGuestBtn">✖ 中断</button>
+        <!-- 电脑版菜单 -->
+        <div class="menu-section pc-only">
+            <div class="section-title">📋 菜品菜单</div>
+            <div class="menu-items" id="menuList"></div>
+        </div>
+        <div class="recipe-section pc-only">
+            <div class="section-title">🔓 配方解锁</div>
+            <div class="recipe-items" id="recipeList"></div>
+        </div>
+        <!-- 手机版配方 -->
+        <div class="recipe-col mobile-only">
+            <div class="recipe-title">🔓 配方解锁</div>
+            <div class="recipe-items" id="recipeListMobile"></div>
         </div>
     </div>
 
-    <!-- 左右双列 -->
-    <div class="row-split">
-        <div class="menu-col" id="menuList"></div>
-        <div class="recipe-col" id="recipeList"></div>
-    </div>
-
-    <!-- 厨房操作区 -->
+    <!-- 中间烹饪区 -->
     <div class="counter">
-        <div class="panel">
-            <div id="ingredientSliders"></div>
-
-            <div class="salt-area">
-                <div class="salt-row">
-                    <div class="ingr-emoji">🧂</div>
-                    <div class="slider-box">
-                        <div class="slider-label">
-                            <span>盐 (g) <span class="range-hint" id="saltRangeHint"></span></span>
-                            <span><span class="current-hint">当前</span> <span id="saltValueDisplay">0.0</span></span>
+        <div class="cooking-grid">
+            <div class="ingredients-area">
+                <div id="ingredientSliders"></div>
+                <div class="salt-area">
+                    <div class="salt-row">
+                        <div class="ingr-emoji">🧂</div>
+                        <div class="slider-box">
+                            <div class="slider-label">
+                                <span><span id="saltName">盐</span> (g) <span class="range-hint" id="saltRangeHint"></span></span>
+                                <span><span class="current-hint">当前</span> <span id="saltValueDisplay">0.0</span></span>
+                            </div>
+                            <input type="range" id="saltSlider" min="0" max="20" value="0" step="0.1">
                         </div>
-                        <input type="range" id="saltSlider" min="0" max="20" value="0" step="0.1">
                     </div>
+                    <div class="total-info" id="totalMainWeight">食材总重: 0g</div>
                 </div>
-                <div class="total-info" id="totalMainWeight">食材总重: 0g</div>
-            </div>
-
-            <div id="shortageWarning" class="shortage-warning"></div>
-            <button class="btn cook-serve" id="cookAndServeBtn">🍳 烹饪并上菜</button>
-            
-            <!-- 评分区 - 现在紧贴按钮下方 -->
-            <div class="score-section">
-                <div class="plate" style="margin-top:0;">
-                    <div class="dish-icon" id="dishEmoji">🍳</div>
-                    <div class="dish-meta">
-                        <div class="dish-name" id="cookedDishName">—</div>
-                        <div class="feedback" id="cookedFeedback">等待烹饪</div>
-                    </div>
-                    <div class="score-badge" id="scoreDisplay">-</div>
+                <div id="shortageWarning" class="shortage-warning"></div>
+                <div class="action-buttons-below pc-only">
+                    <div class="action-btn" id="pcInventoryBtn">📦 库存</div>
+                    <div class="action-btn" id="pcMerchantBtn">📦 供货商</div>
                 </div>
             </div>
-
-            <!-- 提示区 -->
-            <div class="advice-box" id="adviceText">调整比例，争取高分解锁配方</div>
-            
-            <!-- 故事碎片 - 移到了最下面 -->
-            <div id="storyFragment" class="story-fragment"></div>
+            <div class="result-area">
+                <div class="cooking-row mobile-only">
+                    <div class="cooking-left">
+                        <div class="plate">
+                            <div class="dish-icon" id="dishEmoji">🍳</div>
+                            <div class="dish-meta">
+                                <div class="dish-name" id="cookedDishName">—</div>
+                                <div class="feedback" id="cookedFeedback">等待烹饪</div>
+                            </div>
+                            <div class="score-badge" id="scoreDisplay">-</div>
+                        </div>
+                    </div>
+                    <div class="cooking-right">
+                        <div class="btn cook-serve" id="cookAndServeBtn">🍳 烹饪</div>
+                    </div>
+                </div>
+                <div class="pc-only">
+                    <div class="btn cook-serve" id="cookAndServeBtnPC">🍳 烹饪并上菜</div>
+                    <div class="plate">
+                        <div class="dish-icon" id="dishEmojiPC">🍳</div>
+                        <div class="dish-meta">
+                            <div class="dish-name" id="cookedDishNamePC">—</div>
+                            <div class="feedback" id="cookedFeedbackPC">等待烹饪</div>
+                        </div>
+                        <div class="score-badge" id="scoreDisplayPC">-</div>
+                    </div>
+                </div>
+                <div class="advice-box" id="adviceText">调整比例，争取高分解锁配方</div>
+                <div id="storyFragment" class="story-fragment"></div>
+            </div>
         </div>
     </div>
 
-    <!-- 库存面板 -->
-    <div class="inventory-panel">
-        <div class="inventory-title">
-            <span>📦 库存</span>
-            <span id="totalInventoryValue">总价值: --</span>
-        </div>
-        <div class="inventory-grid" id="inventoryGrid"></div>
+    <!-- 底部按钮栏（电脑版） -->
+    <div class="bottom-bar pc-only">
+        <div class="bottom-btn" id="pcPartnerBtn">👥 伙伴</div>
+    </div>
+    <!-- 手机端按钮 -->
+    <div class="mobile-buttons mobile-only">
+        <div class="mobile-btn" id="mobileInventoryBtn">📦 库存</div>
+        <div class="mobile-btn" id="mobileMerchantBtn">📦 供货商</div>
+        <div class="mobile-btn" id="mobilePartnerBtn">👥 伙伴</div>
     </div>
 
-    <!-- 进货商面板 -->
-    <div class="merchant-panel">
-        <div class="merchant-title">
-            <span>🛒 进货商 <span id="merchantTimeBadge">(上午价格)</span></span>
-            <span id="merchantHint">点击购买(5个/份)</span>
+    <!-- 库存弹窗 -->
+    <div class="modal" id="inventoryModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span>📦 库存</span>
+                <span id="modalEstimate">预估接客: --</span>
+                <div class="modal-close" id="closeInventoryModal">关闭</div>
+            </div>
+            <div class="inventory-grid" id="modalInventoryGrid"></div>
         </div>
-        <div class="merchant-grid" id="merchantGrid"></div>
     </div>
 
-    <!-- 版权声明 -->
+    <!-- 供货商弹窗 -->
+    <div class="modal" id="merchantModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span>📦 供货商 <span id="modalMerchantTimeBadge">(上午价格)</span></span>
+                <span class="gold-display" id="modalGoldDisplay">💰 0</span>
+                <div class="modal-close" id="closeMerchantModal">关闭</div>
+            </div>
+            <div class="merchant-container">
+                <div class="shopping-list">
+                    <div class="shopping-title">📋 采购清单</div>
+                    <div class="shopping-items" id="shoppingList"></div>
+                </div>
+                <div class="shop-items">
+                    <div class="shop-title">🏪 商店</div>
+                    <div class="merchant-grid" id="modalMerchantGrid"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 伙伴弹窗 -->
+    <div class="modal" id="partnerModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span>👥 伙伴管理</span>
+                <div class="modal-close" id="closePartnerModal">关闭</div>
+            </div>
+            <div id="partnerList"></div>
+            <div style="text-align:center; margin-top:15px;">
+                <div class="btn" id="applyAutoShift">应用自动排班</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
     <div class="copyright">
-        游戏设计 · 凌霄云弈 | 感谢您的试玩
+        游戏设计 · 凌霄云弈 | 代码编程 · Deepseek | 感谢您的试玩
     </div>
 </div>
 
 <script>
 // =============================================================================
-// 厨房实验室 - 修复版
+// 厨房实验室 - 伙伴系统版（修复顺序）
 // =============================================================================
-// 游戏设计、数值平衡、测试：凌霄云弈
-// 代码辅助：Deepseek
+// 游戏设计：凌霄云弈 | 代码编程：Deepseek
 // =============================================================================
 
 // =============================================================================
 // 1. 全局配置
 // =============================================================================
 const GAME_CONFIG = {
-    businessHours: { start: 6, end: 21 },
+    businessHours: { start: 10, end: 21 }, // 10:00-21:00
+    shifts: {
+        morning: { start: 10, end: 16 },   // 早班 10-16
+        evening: { start: 15, end: 21 }    // 晚班 15-21
+    },
     currencyName: {
         normal: '金币',
         immersive: '哈塞盾'
@@ -696,11 +1190,14 @@ const GAME_CONFIG = {
         offlineThresholdMinutes: 30
     },
     initialGold: 5000,
-    purchaseQuantity: 5  // 每次购买5个
+    purchaseQuantity: 5,
+    lowStockThreshold: 5,
+    toastDuration: 1000,
+    autoWorkScore: 80 // 伙伴自动工作固定评分
 };
 
 // =============================================================================
-// 2. 食材库 (普通模式 + 沉浸模式名称)
+// 2. 食材库
 // =============================================================================
 const INGREDIENTS = {
     tomato: { nameCN: '番茄', nameIM: '红果', emoji: '🍅' },
@@ -887,7 +1384,8 @@ const SAVE_KEYS = {
     dailyStatus: 'kitchen_daily',
     immersiveMode: 'kitchen_immersive',
     customerQueue: 'kitchen_customers',
-    lastLoginTime: 'kitchen_last_login'
+    lastLoginTime: 'kitchen_last_login',
+    partners: 'kitchen_partners'   // 新增伙伴存档
 };
 
 // =============================================================================
@@ -907,10 +1405,15 @@ let dailyStatus = { date: '', specialId: '', completed: false, streak: 0 };
 let customerQueue = [];
 let guestTimeout = null;
 let spawnInterval = null;
+let currentGuest = null;
+
+// 伙伴数据
+let partners = [];
 
 // =============================================================================
 // 7. DOM元素
 // =============================================================================
+// 电脑版
 const businessStatus = document.getElementById('businessStatus');
 const currencyDisplay = document.getElementById('currencyDisplay');
 const timeDisplay = document.getElementById('timeDisplay');
@@ -918,32 +1421,78 @@ const guestEmoji = document.getElementById('guestEmoji');
 const guestWant = document.getElementById('guestWant');
 const guestOrderDish = document.getElementById('guestOrderDish');
 const queueCount = document.getElementById('queueCount');
-const menuListDiv = document.getElementById('menuList');
-const recipeListDiv = document.getElementById('recipeList');
+const menuList = document.getElementById('menuList');
+const recipeList = document.getElementById('recipeList');
+const newGuestBtn = document.getElementById('newGuestBtn');
+const cancelGuestBtn = document.getElementById('cancelGuestBtn');
+const dailySpecialName = document.getElementById('dailySpecialName');
+
+// 手机版
+const businessStatusMobile = document.getElementById('businessStatusMobile');
+const timeDisplayMobile = document.getElementById('timeDisplayMobile');
+const toggleImmersiveBtnMobile = document.getElementById('toggleImmersiveBtnMobile');
+const currencyDisplayMobile = document.getElementById('currencyDisplayMobile');
+const guestEmojiMobile = document.getElementById('guestEmojiMobile');
+const guestWantMobile = document.getElementById('guestWantMobile');
+const guestOrderDishMobile = document.getElementById('guestOrderDishMobile');
+const queueCountMobile = document.getElementById('queueCountMobile');
+const menuListMobile = document.getElementById('menuListMobile');
+const recipeListMobile = document.getElementById('recipeListMobile');
+const newGuestBtnMobile = document.getElementById('newGuestBtnMobile');
+const cancelGuestBtnMobile = document.getElementById('cancelGuestBtnMobile');
+const dailySpecialNameMobile = document.getElementById('dailySpecialNameMobile');
+
+// 共用
 const ingredientSlidersDiv = document.getElementById('ingredientSliders');
 const saltSlider = document.getElementById('saltSlider');
 const saltValueDisplay = document.getElementById('saltValueDisplay');
 const saltRangeHint = document.getElementById('saltRangeHint');
 const totalMainWeightSpan = document.getElementById('totalMainWeight');
-const cookAndServeBtn = document.getElementById('cookAndServeBtn');
-const newGuestBtn = document.getElementById('newGuestBtn');
-const cancelGuestBtn = document.getElementById('cancelGuestBtn');
+const shortageWarning = document.getElementById('shortageWarning');
+const adviceText = document.getElementById('adviceText');
+const storyFragment = document.getElementById('storyFragment');
+const toggleImmersiveBtn = document.getElementById('toggleImmersiveBtn');
+const saltName = document.getElementById('saltName');
 const dishEmoji = document.getElementById('dishEmoji');
 const cookedDishName = document.getElementById('cookedDishName');
 const cookedFeedback = document.getElementById('cookedFeedback');
 const scoreDisplay = document.getElementById('scoreDisplay');
-const adviceText = document.getElementById('adviceText');
-const storyFragment = document.getElementById('storyFragment');
-const toggleImmersiveBtn = document.getElementById('toggleImmersiveBtn');
-const dailySpecialName = document.getElementById('dailySpecialName');
-const shortageWarning = document.getElementById('shortageWarning');
-const inventoryGrid = document.getElementById('inventoryGrid');
-const merchantGrid = document.getElementById('merchantGrid');
-const merchantTimeBadge = document.getElementById('merchantTimeBadge');
-const totalInventoryValue = document.getElementById('totalInventoryValue');
+const cookAndServeBtn = document.getElementById('cookAndServeBtn');
+const cookAndServeBtnPC = document.getElementById('cookAndServeBtnPC');
+const dishEmojiPC = document.getElementById('dishEmojiPC');
+const cookedDishNamePC = document.getElementById('cookedDishNamePC');
+const cookedFeedbackPC = document.getElementById('cookedFeedbackPC');
+const scoreDisplayPC = document.getElementById('scoreDisplayPC');
+
+// 弹窗
+const inventoryModal = document.getElementById('inventoryModal');
+const merchantModal = document.getElementById('merchantModal');
+const partnerModal = document.getElementById('partnerModal');
+const modalInventoryGrid = document.getElementById('modalInventoryGrid');
+const modalMerchantGrid = document.getElementById('modalMerchantGrid');
+const modalEstimate = document.getElementById('modalEstimate');
+const modalGoldDisplay = document.getElementById('modalGoldDisplay');
+const modalMerchantTimeBadge = document.getElementById('modalMerchantTimeBadge');
+const closeInventoryModal = document.getElementById('closeInventoryModal');
+const closeMerchantModal = document.getElementById('closeMerchantModal');
+const closePartnerModal = document.getElementById('closePartnerModal');
+const shoppingList = document.getElementById('shoppingList');
+const partnerListDiv = document.getElementById('partnerList');
+const applyAutoShiftBtn = document.getElementById('applyAutoShift');
+
+// 按钮
+const pcInventoryBtn = document.getElementById('pcInventoryBtn');
+const pcMerchantBtn = document.getElementById('pcMerchantBtn');
+const pcPartnerBtn = document.getElementById('pcPartnerBtn');
+const mobileInventoryBtn = document.getElementById('mobileInventoryBtn');
+const mobileMerchantBtn = document.getElementById('mobileMerchantBtn');
+const mobilePartnerBtn = document.getElementById('mobilePartnerBtn');
+
+// 自动消失弹窗
+const toast = document.getElementById('toast');
 
 // =============================================================================
-// 8. 工具函数
+// 8. 工具函数（提前定义）
 // =============================================================================
 function findRecipe(id) {
     return RECIPES.find(r => r.id === id);
@@ -972,21 +1521,140 @@ function getCurrentTime() {
         minute: beijingTime.getMinutes(),
         period: beijingTime.getHours() < 12 ? 'morning' : 'afternoon',
         dateStr: beijingTime.toISOString().split('T')[0],
-        timestamp: beijingTime.getTime()
+        timestamp: beijingTime.getTime(),
+        dayOfWeek: beijingTime.getDay() // 0=周日,1=周一,...,6=周六
     };
 }
 
+// 判断今天是否营业（考虑伙伴数量和星期）
+function isBusinessDay() {
+    const { dayOfWeek } = getCurrentTime();
+    // 周一=1,周二=2
+    if (partners.length <= 2 && (dayOfWeek === 1 || dayOfWeek === 2)) {
+        return false; // 周一周二休息
+    }
+    return true;
+}
+
 function isBusinessHours() {
+    if (!isBusinessDay()) return false;
     const { hour } = getCurrentTime();
     return hour >= GAME_CONFIG.businessHours.start && hour < GAME_CONFIG.businessHours.end;
 }
 
+// 判断某个伙伴当前是否在岗
+function isPartnerOnDuty(partner) {
+    if (!isBusinessDay()) return false;
+    const { hour } = getCurrentTime();
+    const shift = partner.currentShift;
+    if (shift === 'rest') return false;
+    const s = GAME_CONFIG.shifts[shift];
+    return hour >= s.start && hour < s.end;
+}
+
+// 获取当前在岗伙伴数量
+function getOnDutyCount() {
+    return partners.filter(p => isPartnerOnDuty(p)).length;
+}
+
+// 自动排班函数（根据规则）
+function applyAutoShift() {
+    const count = partners.length;
+    if (count === 0) return;
+    // 按ID排序保证稳定
+    const sorted = [...partners].sort((a,b) => a.id.localeCompare(b.id));
+    const leader = sorted.find(p => p.isLeader) || sorted[0]; // 默认第一个为组长
+    const others = sorted.filter(p => p.id !== leader.id);
+    
+    if (count === 1) {
+        // 只有组长，强制晚班
+        leader.currentShift = 'evening';
+    } else if (count === 2) {
+        // 组长按偏好，另一人另一班次
+        leader.currentShift = leader.preferredShift;
+        const otherShift = leader.preferredShift === 'morning' ? 'evening' : 'morning';
+        others[0].currentShift = otherShift;
+    } else if (count >= 3) {
+        // 组长按偏好，第二人另一班次，第三人及以后固定晚班
+        leader.currentShift = leader.preferredShift;
+        const otherShift = leader.preferredShift === 'morning' ? 'evening' : 'morning';
+        // 第二人
+        others[0].currentShift = otherShift;
+        // 其余人固定晚班
+        for (let i=1; i<others.length; i++) {
+            others[i].currentShift = 'evening';
+        }
+    }
+    saveGame();
+    renderPartnerModal();
+}
+
+// 初始化伙伴：只有A，组长，偏好早班
+function initPartners() {
+    partners = [
+        { id: 'A', name: 'A', preferredShift: 'morning', currentShift: 'evening', isLeader: true } // 初始按规则1人上晚班
+    ];
+    applyAutoShift(); // 根据规则设置currentShift
+}
+initPartners(); // 默认
+
+// 获取食材基础价格
 function getIngredientBasePrice(ingId) {
     return INGREDIENT_BASE_PRICE[ingId] || 5;
 }
 
+// 显示自动消失弹窗
+function showToast(message) {
+    toast.style.display = 'block';
+    toast.innerText = message;
+    setTimeout(() => {
+        toast.style.display = 'none';
+    }, GAME_CONFIG.toastDuration);
+}
+
 // =============================================================================
-// 9. 客人队列系统
+// 9. 弹窗控制
+// =============================================================================
+function showInventoryModal() {
+    renderModalInventory();
+    inventoryModal.style.display = 'flex';
+}
+function hideInventoryModal() { inventoryModal.style.display = 'none'; }
+function showMerchantModal() {
+    renderModalMerchant();
+    merchantModal.style.display = 'flex';
+}
+function hideMerchantModal() { merchantModal.style.display = 'none'; }
+function showPartnerModal() {
+    renderPartnerModal();
+    partnerModal.style.display = 'flex';
+}
+function hidePartnerModal() { partnerModal.style.display = 'none'; }
+
+window.addEventListener('click', (e) => {
+    if (e.target === inventoryModal) hideInventoryModal();
+    if (e.target === merchantModal) hideMerchantModal();
+    if (e.target === partnerModal) hidePartnerModal();
+});
+
+closeInventoryModal.addEventListener('click', hideInventoryModal);
+closeMerchantModal.addEventListener('click', hideMerchantModal);
+closePartnerModal.addEventListener('click', hidePartnerModal);
+
+pcInventoryBtn?.addEventListener('click', showInventoryModal);
+pcMerchantBtn?.addEventListener('click', showMerchantModal);
+pcPartnerBtn?.addEventListener('click', showPartnerModal);
+mobileInventoryBtn?.addEventListener('click', showInventoryModal);
+mobileMerchantBtn?.addEventListener('click', showMerchantModal);
+mobilePartnerBtn?.addEventListener('click', showPartnerModal);
+
+applyAutoShiftBtn?.addEventListener('click', () => {
+    applyAutoShift();
+    showToast('自动排班已应用');
+});
+
+// =============================================================================
+// 10. 客人队列系统
 // =============================================================================
 function generateRandomGuest() {
     const idx = Math.floor(Math.random() * RECIPES.length);
@@ -1007,15 +1675,17 @@ function generateCustomerBatch(count) {
 }
 
 function updateQueueDisplay() {
-    queueCount.innerText = customerQueue.length;
-    if (customerQueue.length === 0 && !guestTimeout) {
+    const count = customerQueue.length;
+    if (queueCount) queueCount.innerText = count;
+    if (queueCountMobile) queueCountMobile.innerText = count;
+    if (count === 0 && !guestTimeout) {
         clearGuestDisplay();
     }
 }
 
 function takeNextCustomer() {
     if (customerQueue.length === 0) {
-        alert('暂时没有客人，请稍等');
+        showToast('暂时没有客人，请稍等');
         return null;
     }
     const next = customerQueue.shift();
@@ -1061,14 +1731,54 @@ function startSpawnTimer() {
 }
 
 // =============================================================================
-// 10. 烹饪核心逻辑
+// 11. 自动工作（伙伴）
+// =============================================================================
+function autoWork() {
+    if (!isBusinessHours()) return; // 非营业时间不工作
+    if (customerQueue.length === 0) return;
+    // 取第一位客人
+    const guest = customerQueue[0];
+    const recipe = findRecipe(guest.dishId);
+    if (!recipe) return;
+
+    // 检查库存是否足够（按标准配方）
+    let enough = true;
+    for (let item of recipe.main) {
+        const required = item.target;
+        const stdWeight = ITEM_WEIGHT[item.ingId] || 100;
+        const requiredUnits = Math.ceil(required / stdWeight);
+        const available = inventory[item.ingId] || 0;
+        if (available < requiredUnits) {
+            enough = false;
+            break;
+        }
+    }
+    
+    if (enough) {
+        // 消耗食材
+        for (let item of recipe.main) {
+            const required = item.target;
+            const stdWeight = ITEM_WEIGHT[item.ingId] || 100;
+            const requiredUnits = Math.ceil(required / stdWeight);
+            inventory[item.ingId] -= requiredUnits;
+        }
+        // 获得收益（固定80分）
+        const earning = Math.round((recipe.basePriceCN || 30) * 10 * 0.8);
+        gold += earning;
+    }
+    // 无论是否成功，移除该客人
+    customerQueue.shift();
+    updateQueueDisplay();
+    saveGame();
+}
+
+// =============================================================================
+// 12. 烹饪核心逻辑（玩家）
 // =============================================================================
 function setMainAmountsRandom(recipe) {
-    // 随机设置主料值 (最小值的1.1倍到最大值的0.9倍之间，避免极端)
     recipe.main.forEach(item => {
         const min = item.target * 0.5;
         const max = item.target * 2.0;
-        // 随机在 min*1.1 到 max*0.9 之间，避免太极端
         const randomMin = min * 1.1;
         const randomMax = max * 0.9;
         currentMainAmounts[item.ingId] = Math.round((Math.random() * (randomMax - randomMin) + randomMin) * 10) / 10;
@@ -1099,7 +1809,6 @@ function updateSaltSlider() {
     saltSlider.min = Math.max(0, min - buffer);
     saltSlider.max = max + buffer;
     
-    // 如果当前盐值超出新范围，拉回边界
     if (currentSalt < saltSlider.min) currentSalt = saltSlider.min;
     if (currentSalt > saltSlider.max) currentSalt = saltSlider.max;
     
@@ -1122,7 +1831,6 @@ function calculateScore(recipe) {
     const totalActual = calcTotalMainWeight(recipe);
     if (totalActual === 0) return 0;
     
-    // 计算目标总重和主料得分
     const totalTarget = recipe.main.reduce((acc, item) => acc + item.target, 0);
     let mainScore = 0;
     let deviations = [];
@@ -1143,7 +1851,6 @@ function calculateScore(recipe) {
     
     mainScore = Math.max(0, (mainScore / recipe.main.length) * 100);
     
-    // 盐得分
     const { min, max } = getSaltMinMax(recipe, totalActual);
     let saltScore = 0;
     if (currentSalt >= min && currentSalt <= max) {
@@ -1204,7 +1911,6 @@ function generateAdvice(scoreResult) {
     
     let advice = [];
     
-    // 主料建议
     scoreResult.deviations.forEach(dev => {
         const ingName = getIngredientName(dev.ingId);
         if (dev.deviation > 0.15) {
@@ -1222,7 +1928,6 @@ function generateAdvice(scoreResult) {
         }
     });
     
-    // 盐的建议
     const recipe = findRecipe(selectedDishId);
     const total = calcTotalMainWeight(recipe);
     const { min, max } = getSaltMinMax(recipe, total);
@@ -1244,7 +1949,7 @@ function generateAdvice(scoreResult) {
 }
 
 // =============================================================================
-// 11. 渲染函数
+// 13. 渲染函数
 // =============================================================================
 function renderMenu() {
     let html = '';
@@ -1252,12 +1957,15 @@ function renderMenu() {
         const selectedClass = (selectedDishId === r.id) ? 'selected' : '';
         html += `<div class="menu-item ${selectedClass}" data-id="${r.id}">${r.emoji} ${getDisplayName(r)}</div>`;
     });
-    menuListDiv.innerHTML = html;
+    
+    if (menuList) menuList.innerHTML = html;
+    if (menuListMobile) menuListMobile.innerHTML = html;
+    
     document.querySelectorAll('.menu-item').forEach(el => {
         el.addEventListener('click', () => {
             selectedDishId = el.dataset.id;
             const recipe = findRecipe(selectedDishId);
-            setMainAmountsRandom(recipe);  // 改为随机值
+            setMainAmountsRandom(recipe);
             resetSaltToMid();
             renderMenu();
             renderIngredientSliders();
@@ -1270,6 +1978,7 @@ function renderMenu() {
 function renderRecipeList() {
     const recipe = findRecipe(selectedDishId);
     if (!recipe) return;
+    
     const unlocked = unlockedRecipes[recipe.id];
     const lockClass = unlocked ? 'unlocked' : 'locked';
     let detail = '???';
@@ -1279,19 +1988,26 @@ function renderRecipeList() {
         const salt = (total * (recipe.saltRange[0] + recipe.saltRange[1]) / 2).toFixed(1);
         detail = `${mains} · 🧂 ${salt}g`;
     }
-    recipeListDiv.innerHTML = `<div class="recipe-item ${lockClass}" data-id="${recipe.id}">
+    
+    const html = `<div class="recipe-item ${lockClass}" data-id="${recipe.id}">
         <span class="recipe-emoji">${recipe.emoji}</span>
         <span class="recipe-detail">${detail}</span>
     </div>`;
+    
+    if (recipeList) recipeList.innerHTML = html;
+    if (recipeListMobile) recipeListMobile.innerHTML = html;
+    
     if (unlocked) {
-        document.querySelector('.recipe-item').addEventListener('click', () => {
-            recipe.main.forEach(item => {
-                currentMainAmounts[item.ingId] = item.target;
+        document.querySelectorAll('.recipe-item.unlocked').forEach(el => {
+            el.addEventListener('click', () => {
+                recipe.main.forEach(item => {
+                    currentMainAmounts[item.ingId] = item.target;
+                });
+                const total = recipe.main.reduce((a, i) => a + i.target, 0);
+                currentSalt = total * (recipe.saltRange[0] + recipe.saltRange[1]) / 2;
+                renderIngredientSliders();
+                updateSaltSlider();
             });
-            const total = recipe.main.reduce((a, i) => a + i.target, 0);
-            currentSalt = total * (recipe.saltRange[0] + recipe.saltRange[1]) / 2;
-            renderIngredientSliders();
-            updateSaltSlider();
         });
     }
 }
@@ -1330,20 +2046,27 @@ function renderIngredientSliders() {
             });
         }
     });
+    
+    saltName.innerText = immersiveMode ? '晶盐' : '盐';
 }
 
-function renderInventory() {
+function calculateEstimateCustomers() {
+    let totalMeals = 0;
+    for (let ingId in INGREDIENTS) {
+        const qty = inventory[ingId] || 0;
+        totalMeals += qty;
+    }
+    return Math.floor(totalMeals / 3);
+}
+
+function renderModalInventory() {
     let html = '';
-    let totalValue = 0;
     for (let ingId in INGREDIENTS) {
         const ing = INGREDIENTS[ingId];
         const qty = inventory[ingId] || 0;
         if (qty === 0) continue;
         const stdWeight = ITEM_WEIGHT[ingId] || 100;
         const totalWeight = qty * stdWeight;
-        const basePrice = getIngredientBasePrice(ingId);
-        const value = qty * basePrice * 10;
-        totalValue += value;
         html += `<div class="inventory-item">
             <span>${ing.emoji}</span>
             <span>${getIngredientName(ingId)}</span>
@@ -1351,8 +2074,8 @@ function renderInventory() {
             <span style="font-size:12px;">≈${totalWeight}g</span>
         </div>`;
     }
-    inventoryGrid.innerHTML = html || '<div style="color:#aaa;padding:8px;">仓库空空如也</div>';
-    totalInventoryValue.innerText = `总价值: ${totalValue} ${getCurrencyName()}`;
+    modalInventoryGrid.innerHTML = html || '<div style="color:#aaa;padding:8px;">仓库空空如也</div>';
+    modalEstimate.innerText = `预估接客: ${calculateEstimateCustomers()}人`;
 }
 
 function refreshMerchantPrices() {
@@ -1365,22 +2088,40 @@ function refreshMerchantPrices() {
     currentPricePeriod = period;
 }
 
-function renderMerchant() {
+function renderModalMerchant() {
     let html = '';
+    let shoppingHtml = '';
+    
     for (let ingId in INGREDIENTS) {
         const ing = INGREDIENTS[ingId];
         const price = merchantPrices[ingId] || 0;
+        const qty = inventory[ingId] || 0;
         const canAfford = gold >= price;
+        const isLowStock = qty <= GAME_CONFIG.lowStockThreshold;
         const disabledClass = canAfford ? '' : 'disabled';
-        html += `<div class="merchant-item ${disabledClass}" data-ing-id="${ingId}" data-price="${price}">
+        
+        html += `<div class="merchant-item ${disabledClass} ${isLowStock ? 'highlight' : ''}" data-ing-id="${ingId}" data-price="${price}">
             <span>${ing.emoji}</span>
             <span>${getIngredientName(ingId)} x5</span>
             <span class="price">${price}💰</span>
+            <span style="font-size:11px;">库存:${qty}</span>
         </div>`;
+        
+        if (isLowStock) {
+            shoppingHtml += `<div class="shopping-item">
+                <span>${ing.emoji}</span>
+                <span>${getIngredientName(ingId)}</span>
+                <span class="count">库存:${qty}</span>
+            </div>`;
+        }
     }
-    merchantGrid.innerHTML = html;
     
-    document.querySelectorAll('.merchant-item').forEach(item => {
+    modalMerchantGrid.innerHTML = html;
+    shoppingList.innerHTML = shoppingHtml || '<div style="color:#aaa;padding:8px;">所有食材充足</div>';
+    modalGoldDisplay.innerText = `💰 ${gold} ${getCurrencyName()}`;
+    modalMerchantTimeBadge.innerText = currentPricePeriod === 'morning' ? '(上午价格)' : '(下午价格)';
+    
+    document.querySelectorAll('#modalMerchantGrid .merchant-item').forEach(item => {
         if (item.classList.contains('disabled')) return;
         item.addEventListener('click', () => {
             const ingId = item.dataset.ingId;
@@ -1390,11 +2131,49 @@ function renderMerchant() {
             gold -= price;
             inventory[ingId] = (inventory[ingId] || 0) + GAME_CONFIG.purchaseQuantity;
             
+            const ingName = getIngredientName(ingId);
+            showToast(`✅ 购买 ${GAME_CONFIG.purchaseQuantity}个 ${ingName}\n花费 ${price} ${getCurrencyName()}`);
+            
             saveGame();
             updateStatusBar();
-            renderInventory();
-            renderMerchant();
+            renderModalInventory();
+            renderModalMerchant();
             checkShortage();
+        });
+    });
+}
+
+function renderPartnerModal() {
+    let html = '';
+    partners.forEach(p => {
+        const status = isPartnerOnDuty(p) ? '✅ 在岗' : '⏸️ 休息';
+        html += `<div class="partner-item">
+            <div class="partner-row">
+                <span>👤 伙伴 ${p.name} ${p.isLeader ? '(组长)' : ''}</span>
+                <span>${status}</span>
+            </div>
+            <div class="partner-row">
+                <span>偏好: ${p.preferredShift === 'morning' ? '早班' : '晚班'}</span>
+                <select class="shift-select" data-id="${p.id}">
+                    <option value="morning" ${p.currentShift === 'morning' ? 'selected' : ''}>早班</option>
+                    <option value="evening" ${p.currentShift === 'evening' ? 'selected' : ''}>晚班</option>
+                    <option value="rest" ${p.currentShift === 'rest' ? 'selected' : ''}>休息</option>
+                </select>
+            </div>
+        </div>`;
+    });
+    partnerListDiv.innerHTML = html;
+    // 绑定下拉框事件
+    document.querySelectorAll('.shift-select').forEach(select => {
+        select.addEventListener('change', (e) => {
+            const id = e.target.dataset.id;
+            const partner = partners.find(p => p.id === id);
+            if (partner) {
+                partner.currentShift = e.target.value;
+                saveGame();
+                renderPartnerModal(); // 刷新状态显示
+                showToast(`伙伴 ${partner.name} 班次已更新`);
+            }
         });
     });
 }
@@ -1402,30 +2181,57 @@ function renderMerchant() {
 function updateStatusBar() {
     const { hour, minute, period } = getCurrentTime();
     const timeStr = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
-    timeDisplay.innerText = timeStr;
+    
+    if (timeDisplay) timeDisplay.innerText = timeStr;
+    if (timeDisplayMobile) timeDisplayMobile.innerText = timeStr;
     
     const open = isBusinessHours();
-    businessStatus.innerText = open ? '🟢 营业中' : '🔴 已打烊';
-    businessStatus.className = 'business-status ' + (open ? 'open' : '');
+    const statusText = open ? '🟢 营业中' : '🔴 已打烊';
+    const statusClass = open ? 'open' : '';
     
-    currencyDisplay.innerText = `💰 ${gold} ${getCurrencyName()}`;
+    if (businessStatus) {
+        businessStatus.innerText = statusText;
+        businessStatus.className = 'business-status ' + statusClass;
+    }
+    if (businessStatusMobile) {
+        businessStatusMobile.innerText = statusText;
+        businessStatusMobile.className = 'business-status ' + statusClass;
+    }
+    
+    const currencyText = `💰 ${gold} ${getCurrencyName()}`;
+    if (currencyDisplay) currencyDisplay.innerText = currencyText;
+    if (currencyDisplayMobile) currencyDisplayMobile.innerText = currencyText;
     
     if (period !== currentPricePeriod) {
         refreshMerchantPrices();
-        renderMerchant();
+        if (merchantModal.style.display === 'flex') renderModalMerchant();
     }
-    merchantTimeBadge.innerText = period === 'morning' ? '(上午价格)' : '(下午价格)';
 }
 
 function clearGuestDisplay() {
     currentGuest = null;
-    guestEmoji.innerText = '😶';
-    guestWant.innerText = '👋 等待客人';
-    guestOrderDish.innerText = '—';
+    if (guestEmoji) guestEmoji.innerText = '😶';
+    if (guestWant) guestWant.innerText = '👋 等待客人';
+    if (guestOrderDish) guestOrderDish.innerText = '—';
+    if (guestEmojiMobile) guestEmojiMobile.innerText = '😶';
+    if (guestWantMobile) guestWantMobile.innerText = '👋 等待客人';
+    if (guestOrderDishMobile) guestOrderDishMobile.innerText = '—';
+}
+
+function updateDishDisplay(recipe, score, feedback, earning) {
+    const name = getDisplayName(recipe);
+    if (cookedDishName) cookedDishName.innerText = name;
+    if (cookedDishNamePC) cookedDishNamePC.innerText = name;
+    if (cookedFeedback) cookedFeedback.innerText = feedback;
+    if (cookedFeedbackPC) cookedFeedbackPC.innerText = feedback;
+    if (scoreDisplay) scoreDisplay.innerText = score;
+    if (scoreDisplayPC) scoreDisplayPC.innerText = score;
+    if (dishEmoji) dishEmoji.innerText = recipe.emoji;
+    if (dishEmojiPC) dishEmojiPC.innerText = recipe.emoji;
 }
 
 // =============================================================================
-// 12. 存档系统
+// 14. 存档系统
 // =============================================================================
 function saveGame() {
     try {
@@ -1435,6 +2241,7 @@ function saveGame() {
         localStorage.setItem(SAVE_KEYS.dailyStatus, JSON.stringify(dailyStatus));
         localStorage.setItem(SAVE_KEYS.immersiveMode, immersiveMode.toString());
         localStorage.setItem(SAVE_KEYS.customerQueue, JSON.stringify(customerQueue));
+        localStorage.setItem(SAVE_KEYS.partners, JSON.stringify(partners));
     } catch (e) {
         console.warn('存档失败', e);
     }
@@ -1459,13 +2266,20 @@ function loadGame() {
         
         const savedQueue = localStorage.getItem(SAVE_KEYS.customerQueue);
         if (savedQueue) customerQueue = JSON.parse(savedQueue);
+        
+        const savedPartners = localStorage.getItem(SAVE_KEYS.partners);
+        if (savedPartners) {
+            partners = JSON.parse(savedPartners);
+        } else {
+            initPartners();
+        }
     } catch (e) {
         console.warn('读档失败，使用初始值', e);
     }
 }
 
 // =============================================================================
-// 13. 初始化
+// 15. 初始化
 // =============================================================================
 function init() {
     loadGame();
@@ -1485,11 +2299,19 @@ function init() {
         };
     }
     
-    toggleImmersiveBtn.innerText = immersiveMode ? '🌌 沉浸模式' : '🌍 普通模式';
+    toggleImmersiveBtn.innerText = immersiveMode ? '🌌 沉浸文本' : '🌍 普通文本';
     toggleImmersiveBtn.classList.toggle('immersive', immersiveMode);
+    if (toggleImmersiveBtnMobile) {
+        toggleImmersiveBtnMobile.innerText = immersiveMode ? '🌌 沉浸文本' : '🌍 普通文本';
+        toggleImmersiveBtnMobile.classList.toggle('immersive', immersiveMode);
+    }
     
     const specialRecipe = findRecipe(dailyStatus.specialId);
-    if (specialRecipe) dailySpecialName.innerText = getDisplayName(specialRecipe);
+    if (specialRecipe) {
+        const name = getDisplayName(specialRecipe);
+        if (dailySpecialName) dailySpecialName.innerText = name;
+        if (dailySpecialNameMobile) dailySpecialNameMobile.innerText = name;
+    }
     
     const recipe = findRecipe(selectedDishId);
     setMainAmountsRandom(recipe);
@@ -1502,120 +2324,170 @@ function init() {
     renderMenu();
     renderIngredientSliders();
     renderRecipeList();
-    renderInventory();
-    renderMerchant();
+    renderModalInventory();
+    renderModalMerchant();
     updateStatusBar();
     clearGuestDisplay();
     checkShortage();
     
-    toggleImmersiveBtn.addEventListener('click', () => {
-        immersiveMode = !immersiveMode;
-        saveGame();
-        toggleImmersiveBtn.innerText = immersiveMode ? '🌌 沉浸模式' : '🌍 普通模式';
-        toggleImmersiveBtn.classList.toggle('immersive', immersiveMode);
-        renderMenu();
-        if (currentGuest) {
-            const gr = findRecipe(currentGuest.dishId);
-            if (gr) guestOrderDish.innerText = getDisplayName(gr);
-        }
-        const sr = findRecipe(dailyStatus.specialId);
-        if (sr) dailySpecialName.innerText = getDisplayName(sr);
-        const cr = findRecipe(selectedDishId);
-        if (cr) cookedDishName.innerText = getDisplayName(cr);
-        renderInventory();
-        renderMerchant();
-        updateStatusBar();
-    });
+    inventoryModal.style.display = 'none';
+    merchantModal.style.display = 'none';
+    partnerModal.style.display = 'none';
     
-    cancelGuestBtn.addEventListener('click', () => {
-        if (guestTimeout) clearTimeout(guestTimeout);
-        clearGuestDisplay();
-    });
+    toggleImmersiveBtn.addEventListener('click', toggleHandler);
+    if (toggleImmersiveBtnMobile) toggleImmersiveBtnMobile.addEventListener('click', toggleHandler);
     
-    newGuestBtn.addEventListener('click', () => {
-        if (!isBusinessHours()) {
-            alert('现在不是营业时间');
-            return;
-        }
-        if (customerQueue.length === 0) {
-            alert('暂时没有客人排队');
-            return;
-        }
-        const next = takeNextCustomer();
-        if (next) {
-            currentGuest = next;
-            guestEmoji.innerText = '😀';
-            guestWant.innerText = '我想吃...';
-            guestOrderDish.innerText = immersiveMode ? next.immersiveName : next.dishName;
-        }
-    });
+    if (cancelGuestBtn) cancelGuestBtn.addEventListener('click', cancelHandler);
+    if (cancelGuestBtnMobile) cancelGuestBtnMobile.addEventListener('click', cancelHandler);
+    
+    if (newGuestBtn) newGuestBtn.addEventListener('click', newGuestHandler);
+    if (newGuestBtnMobile) newGuestBtnMobile.addEventListener('click', newGuestHandler);
     
     saltSlider.addEventListener('input', e => {
         currentSalt = parseFloat(e.target.value);
         saltValueDisplay.innerText = currentSalt.toFixed(1);
     });
     
-    cookAndServeBtn.addEventListener('click', () => {
-        const recipe = findRecipe(selectedDishId);
-        if (!recipe) return;
-        
-        const shortage = checkShortage();
-        if (!shortage.ok) {
-            alert('食材不足，无法烹饪');
-            return;
-        }
-        
-        const scoreResult = calculateScore(recipe);
-        const score = scoreResult.total;
-        const feedback = score >= 90 ? '✨ 完美!' : score >= 80 ? '👍 不错' : score >= 60 ? '👌 还可以' : '😕 继续努力';
-        
-        consumeInventory(recipe);
-        const earning = calculateEarning(recipe, score);
-        gold += earning;
-        
-        dishEmoji.innerText = recipe.emoji;
-        cookedDishName.innerText = getDisplayName(recipe);
-        cookedFeedback.innerText = feedback;
-        scoreDisplay.innerText = score;
-        
-        // 生成详细建议
-        adviceText.innerText = generateAdvice(scoreResult);
-        
-        if (score >= 90 && !unlockedRecipes[recipe.id]) {
-            unlockedRecipes[recipe.id] = true;
-            renderRecipeList();
-            if (recipe.storyCN) storyFragment.innerText = '📖 ' + recipe.storyCN;
-        }
-        
-        if (currentGuest) {
-            if (recipe.id === currentGuest.dishId) {
-                guestWant.innerText = `评价: ${feedback}  +${earning}💰`;
-                guestOrderDish.innerText = `得分 ${score}`;
-                guestEmoji.innerText = score >= 60 ? '😁' : '😐';
-            } else {
-                guestWant.innerText = '我点的不是这个...';
-                guestOrderDish.innerText = `我要 ${getDisplayName(findRecipe(currentGuest.dishId))}`;
-                guestEmoji.innerText = '😤';
-            }
-        } else {
-            guestWant.innerText = `练习模式  +${earning}💰`;
-            guestOrderDish.innerText = '无客人';
-        }
-        
-        saveGame();
-        updateStatusBar();
-        renderInventory();
-        renderMerchant();
-        renderIngredientSliders();
-        updateSaltSlider();
-        checkShortage();
-    });
+    if (cookAndServeBtn) cookAndServeBtn.addEventListener('click', cookHandler);
+    if (cookAndServeBtnPC) cookAndServeBtnPC.addEventListener('click', cookHandler);
+    
+    // 启动自动工作定时器（每分钟）
+    setInterval(() => {
+        autoWork();
+    }, 60000);
     
     setInterval(() => {
         updateStatusBar();
     }, 60000);
 }
 
+// 事件处理函数（必须在使用前定义）
+function toggleHandler() {
+    immersiveMode = !immersiveMode;
+    saveGame();
+    toggleImmersiveBtn.innerText = immersiveMode ? '🌌 沉浸文本' : '🌍 普通文本';
+    toggleImmersiveBtn.classList.toggle('immersive', immersiveMode);
+    if (toggleImmersiveBtnMobile) {
+        toggleImmersiveBtnMobile.innerText = immersiveMode ? '🌌 沉浸文本' : '🌍 普通文本';
+        toggleImmersiveBtnMobile.classList.toggle('immersive', immersiveMode);
+    }
+    renderMenu();
+    if (currentGuest) {
+        const gr = findRecipe(currentGuest.dishId);
+        const displayName = getDisplayName(gr);
+        if (guestOrderDish) guestOrderDish.innerText = displayName;
+        if (guestOrderDishMobile) guestOrderDishMobile.innerText = displayName;
+    }
+    const sr = findRecipe(dailyStatus.specialId);
+    if (sr) {
+        const name = getDisplayName(sr);
+        if (dailySpecialName) dailySpecialName.innerText = name;
+        if (dailySpecialNameMobile) dailySpecialNameMobile.innerText = name;
+    }
+    const cr = findRecipe(selectedDishId);
+    if (cr) {
+        if (cookedDishName) cookedDishName.innerText = getDisplayName(cr);
+        if (cookedDishNamePC) cookedDishNamePC.innerText = getDisplayName(cr);
+    }
+    renderIngredientSliders();
+    renderModalInventory();
+    renderModalMerchant();
+    renderPartnerModal();
+    updateStatusBar();
+}
+
+function cancelHandler() {
+    if (guestTimeout) clearTimeout(guestTimeout);
+    clearGuestDisplay();
+}
+
+function newGuestHandler() {
+    if (!isBusinessHours()) {
+        showToast('现在不是营业时间');
+        return;
+    }
+    if (customerQueue.length === 0) {
+        showToast('暂时没有客人排队');
+        return;
+    }
+    const next = takeNextCustomer();
+    if (next) {
+        currentGuest = next;
+        const displayName = immersiveMode ? next.immersiveName : next.dishName;
+        if (guestEmoji) guestEmoji.innerText = '😀';
+        if (guestWant) guestWant.innerText = '我想吃...';
+        if (guestOrderDish) guestOrderDish.innerText = displayName;
+        if (guestEmojiMobile) guestEmojiMobile.innerText = '😀';
+        if (guestWantMobile) guestWantMobile.innerText = '我想吃...';
+        if (guestOrderDishMobile) guestOrderDishMobile.innerText = displayName;
+    }
+}
+
+function cookHandler() {
+    const recipe = findRecipe(selectedDishId);
+    if (!recipe) return;
+    
+    const shortage = checkShortage();
+    if (!shortage.ok) {
+        showToast('食材不足，无法烹饪');
+        return;
+    }
+    
+    const scoreResult = calculateScore(recipe);
+    const score = scoreResult.total;
+    const feedback = score >= 90 ? '✨ 完美!' : score >= 80 ? '👍 不错' : score >= 60 ? '👌 还可以' : '😕 继续努力';
+    
+    consumeInventory(recipe);
+    const earning = calculateEarning(recipe, score);
+    gold += earning;
+    
+    updateDishDisplay(recipe, score, feedback, earning);
+    adviceText.innerText = generateAdvice(scoreResult);
+    
+    if (score >= 90 && !unlockedRecipes[recipe.id]) {
+        unlockedRecipes[recipe.id] = true;
+        renderRecipeList();
+        if (recipe.storyCN) storyFragment.innerText = '📖 ' + recipe.storyCN;
+    }
+    
+    if (currentGuest) {
+        if (recipe.id === currentGuest.dishId) {
+            const message = `评价: ${feedback}  +${earning}💰`;
+            if (guestWant) guestWant.innerText = message;
+            if (guestWantMobile) guestWantMobile.innerText = message;
+            const scoreMsg = `得分 ${score}`;
+            if (guestOrderDish) guestOrderDish.innerText = scoreMsg;
+            if (guestOrderDishMobile) guestOrderDishMobile.innerText = scoreMsg;
+            const emoji = score >= 60 ? '😁' : '😐';
+            if (guestEmoji) guestEmoji.innerText = emoji;
+            if (guestEmojiMobile) guestEmojiMobile.innerText = emoji;
+        } else {
+            const wrongMsg = '我点的不是这个...';
+            if (guestWant) guestWant.innerText = wrongMsg;
+            if (guestWantMobile) guestWantMobile.innerText = wrongMsg;
+            const needMsg = `我要 ${getDisplayName(findRecipe(currentGuest.dishId))}`;
+            if (guestOrderDish) guestOrderDish.innerText = needMsg;
+            if (guestOrderDishMobile) guestOrderDishMobile.innerText = needMsg;
+            if (guestEmoji) guestEmoji.innerText = '😤';
+            if (guestEmojiMobile) guestEmojiMobile.innerText = '😤';
+        }
+    } else {
+        if (guestWant) guestWant.innerText = `练习模式  +${earning}💰`;
+        if (guestWantMobile) guestWantMobile.innerText = `练习模式  +${earning}💰`;
+        if (guestOrderDish) guestOrderDish.innerText = '无客人';
+        if (guestOrderDishMobile) guestOrderDishMobile.innerText = '无客人';
+    }
+    
+    saveGame();
+    updateStatusBar();
+    renderModalInventory();
+    renderModalMerchant();
+    renderIngredientSliders();
+    updateSaltSlider();
+    checkShortage();
+}
+
+// 启动游戏
 init();
 </script>
 </body>
